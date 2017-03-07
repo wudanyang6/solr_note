@@ -1,0 +1,47 @@
+* Indexing and Basic Data Operations
+  三种常用的方式可以向solr index中填充数据
+  - Solr Cell
+  - xml file
+  - Solr's Java Client API
+  填入的数据总是要包含多个字段，每个字段都有一个name和一个content
+  实验文件夹：example/exampledocs/
+
+** Post Tool
+
+*** bin/post
+  #+BEGIN_SRC sh
+  bin/post -c gettingstarted example/films/films.json
+  bin/post -h
+  bin/post -c gettingstarted *.xml
+  bin/post -c gettingstarted -p 8984 *.xml
+  bin/post -c gettingstarted -d '<delete><id>42</id></delete>'
+  bin/post -c gettingstarted *.csv
+  bin/post -c gettingstarted -params "separator=%09" -type text/csv data.csv
+  bin/post -c gettingstarted *.json
+  bin/post -c gettingstarted a.pdf
+
+  bin/post -p port -host host -c collection_name json_file.json
+  # 自动检测文件夹中的文档类型，递归的进行索引数据
+  bin/post -c gettingstarted afolder/
+  bin/post -c gettingstarted -filetypes ppt,html afolder/
+  # 索引一个带有密码的pdf 密码为SolrRocks
+  bin/post -u solr:SolrRocks -c gettingstarted a.pdf
+  #+END_SRC
+
+
+*** SimplePostTool
+    java -jar example/exampledocs/post.jar -h
+
+
+** Uploading Data with Index Handlers
+
+    #+BEGIN_SRC sh
+    curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/my_collection/update' --data-binary ' [ { "id": "1", "title": "Doc 1" }, { "id": "2", "title": "Doc 2" } ]'
+    # 指定文件
+    curl 'http://localhost:8983/solr/techproducts/update?commit=true' --data-binary @example/exampledocs/books.json -H 'Content-type:application/json'
+    #+END_SRC
+
+
+** TODO Uploading Data with Solr Cell using Apache Tika
+
+   导入多种不同的数据格式时有用，如二进制文件、word文档、pdf文档等。

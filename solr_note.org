@@ -1,0 +1,997 @@
+#+OPTIONS: ^:nil
+* Quick Start
+
+** Prerequisite
+*** Java Run Environment(JRE)
+    - version >= 1.8
+    #+BEGIN_SRC shell
+    java -version
+    #+END_SRC
+
+
+** Installing Solr
+    #+BEGIN_SRC sh
+    wget http://lucene.apache.org/solr/
+    cd /path/to/solr_arch
+    tar zxf solr-x.y.z.tgz
+    #+END_SRC
+
+
+** Running Solr
+   #+BEGIN_SRC sh
+    bin/solr start
+    bin/solr -help
+    # 指定命令的帮助文档
+    bin/solr start -help
+
+    # 前端开启Foreground
+    bin/solr start -f
+    # 指定端口 (默认是8983)
+    bin/solr start -p 8984
+    bin/solr stop [-p 8983 | -all]
+
+    # 启动示例
+    bin/solr -e techproducts [techproducts, dih, schemaless, and cloud.]
+
+    bin/solr status
+   #+END_SRC
+
+    ➜  solr bin/solr -e techproducts
+    #+BEGIN_SRC sh
+    ➜  solr bin/solr -e techproducts
+    Solr home directory /Users/wudanyang/self/solr/example/techproducts/solr already exists.
+
+    Starting up Solr on port 8983 using command:
+    bin/solr start -p 8983 -s "example/techproducts/solr"
+
+    Archiving 1 old GC log files to /Users/wudanyang/self/solr/example/techproducts/solr/../logs/archived
+    Archiving 1 console log files to /Users/wudanyang/self/solr/example/techproducts/solr/../logs/archived
+    Rotating solr logs, keeping a max of 9 generations
+    Waiting up to 180 seconds to see Solr running on port 8983 [\]
+    Started Solr server on port 8983 (pid=28473). Happy searching!
+
+
+    Copying configuration to new core instance directory:
+    /Users/wudanyang/self/solr/example/techproducts/solr/techproducts
+
+    Creating new core 'techproducts' using command:
+    http://localhost:8983/solr/admin/cores?action=CREATE&name=techproducts&instanceDir=techproducts
+
+    {
+      "responseHeader":{
+        "status":0,
+        "QTime":2036},
+      "core":"techproducts"}
+
+
+    Indexing tech product example docs from /Users/wudanyang/self/solr/example/exampledocs
+    SimplePostTool version 5.0.0
+    Posting files to [base] url http://localhost:8983/solr/techproducts/update using content-type application/xml...
+    POSTing file gb18030-example.xml to [base]
+    POSTing file hd.xml to [base]
+    POSTing file ipod_other.xml to [base]
+    POSTing file ipod_video.xml to [base]
+    POSTing file manufacturers.xml to [base]
+    POSTing file mem.xml to [base]
+    POSTing file money.xml to [base]
+    POSTing file monitor.xml to [base]
+    POSTing file monitor2.xml to [base]
+    POSTing file mp500.xml to [base]
+    POSTing file sd500.xml to [base]
+    POSTing file solr.xml to [base]
+    POSTing file utf8-example.xml to [base]
+    POSTing file vidcard.xml to [base]
+    14 files indexed.
+    COMMITting Solr index changes to http://localhost:8983/solr/techproducts/update...
+    Time spent: 0:00:00.601
+
+    Solr techproducts example launched successfully. Direct your Web browser to http://localhost:8983/solr to visit the Solr Admin UI
+    #+END_SRC
+
+
+** Create a Core(Collection if on Cloud)
+    - 上面运行的是示例文件,创建自己Core用来索引和搜索文档
+    - Core与Solr的关系跟软件与操作系统关系相似
+    - 每个core有自身的配置文件及数据
+    #+BEGIN_SRC sh
+    bin/solr create -c <name>
+    bin/solr create -help
+    #+END_SRC
+    #+BEGIN_SRC sh
+    ➜  solr bin/solr create -help
+    Usage: solr create [-c name] [-d confdir] [-n configName] [-shards \#] [-replicationFactor \#] [-p port]
+      Create a core or collection depending on whether Solr is running in standalone (core) or SolrCloud
+      mode (collection). In other words, this action detects which mode Solr is running in, and then takes
+      the appropriate action (either create_core or create_collection).
+    #+END_SRC
+
+
+** Add Document
+    schema 决定了文档的结构
+    #+BEGIN_SRC sh
+    ➜  solr bin/post -help
+
+    Usage: post -c <collection> [OPTIONS] <files|directories|urls|-d ["...",...]>
+        or post -help
+
+      collection name defaults to DEFAULT_SOLR_COLLECTION if not specified
+
+    OPTIONS
+    =======
+      Solr options:
+        -url <base Solr update URL> (overrides[包括] collection, host, and port)
+        -host <host> (default: localhost)
+        -p or -port <port> (default: 8983)
+        -commit yes|no (default: yes)
+        -u or -user <user:pass> (sets BasicAuth credentials)
+
+      Web crawl options:
+        -recursive <depth> (default: 1)
+        -delay <seconds> (default: 10)
+
+      Directory crawl options:
+        -delay <seconds> (default: 0)
+
+      stdin/args options:
+        -type <content/type> (default: application/xml)
+
+      Other options:
+        -filetypes <type>[,<type>,...] (default: xml,json,jsonl,csv,pdf,doc,docx,ppt,pptx,xls,xlsx,odt,odp,ods,ott,otp,ots,rtf,htm,html,txt,log)
+        -params "<key>=<value>[&<key>=<value>...]" (values must be URL-encoded; these pass through to Solr update request)
+        -out yes|no (default: no; yes outputs Solr response to console)
+        -format solr (sends application/json content as Solr commands to /update instead of /update/json/docs)
+
+
+    Examples:
+
+    -*- JSON file: bin/post -c wizbang events.json
+    -*- XML files: bin/post -c records article*.xml
+    -*- CSV file: bin/post -c signals LATEST-signals.csv
+    -*- Directory of files: bin/post -c myfiles ~/Documents
+    -*- Web crawl: bin/post -c gettingstarted http://lucene.apache.org/solr -recursive 1 -delay 1
+    -*- Standard input (stdin): echo '{commit: {}}' | bin/post -c my_collection -type application/json -out yes -d
+    -*- Data as string: bin/post -c signals -type text/csv -out yes -d $'id,value\n1,0.47'
+    #+END_SRC
+
+
+** Ask Question
+    + url example:
+      + http://localhost:8983/solr/gettingstarted/select?q=video
+        - host: localhost
+        - port: 8983
+        - app name: solr
+        - request handler: select
+        - query: q
+      + http://localhost:8983/solr/gettingstarted/select?q=video&fl=id,name,price
+        - fl: 返回的字段
+      + http://localhost:8983/solr/gettingstarted/select?q=name:black
+        - q=name:black      name值为black的文档
+      + http://localhost:8983/solr/gettingstarted/select?q=price:[0%20TO%20400]&fl=id,name,price
+        - price:[0%20TO%20400]    范围查询 链接部分需要 urlencode
+      + http://localhost:8983/solr/gettingstarted/select?q=price:[0%20TO%20400]&fl=id,name,price&facet=true&facet.field=cat
+        - facet=true 相当于分组 (facet翻译：方面、侧面、宝石切面。意思是根据facet进行分类[分成几个侧面])
+        - facet.field=cat
+        - facet 的字段必须被索引
+        - 可以根据分组进行再次查询
+          - http://localhost:8983/solr/gettingstarted/select?q=price:0%20TO%20400&fl=id,name,price&facet=true&facet.field=cat&fq=cat:software
+    + documention
+      - responseHeader
+        #+BEGIN_SRC  xml
+        <lst name="responseHeader">
+        <int name="status">0</int>
+        <int name="QTime">85</int>
+        <lst name="params">
+        <str name="q">video</str>
+        </lst>
+        </lst> 
+        #+END_SRC
+      - result 包括一个或者多个doc标签
+        #+BEGIN_SRC xml
+        <result name="response" numFound="3" start="0">xml
+        <doc>xml
+        <str name="id">MA147LL/A</str>xml
+        <arr name="name">xml
+        <str>Apple 60 GB iPod with Video Playback Black</str>xml
+        </arr>xml
+        <arr name="manu">xml
+        ...
+        #+END_SRC
+      - facet_counts
+        #+BEGIN_SRC xml
+          <lst name="facet_counts">
+            <lst name="facet_queries"/>
+            <lst name="facet_fields">
+            <lst name="cat">
+            <int name="electronics">9</int>
+            <int name="connector">2</int>
+            <int name="hard drive">2</int>
+            <int name="memory">2</int>
+            <int name="search">2</int>
+            <int name="software">2</int>
+            <int name="camera">1</int>
+            <int name="copier">1</int>
+            <int name="electronics and stuff2">1</int>
+            <int name="multifunction printer">1</int>
+            <int name="music">1</int>
+            <int name="printer">1</int>
+            <int name="scanner">1</int>
+            <int name="currency">0</int>
+            <int name="electronics and computer1">0</int>
+            <int name="graphics card">0</int>
+            </lst>
+            </lst>
+            <lst name="facet_ranges"/>
+            <lst name="facet_intervals"/>
+            <lst name="facet_heatmaps"/>
+            </lst>
+        #+END_SRC
+* Using the Solr Administration User Interface
+** 访问
+    http://hostname:port/solr
+
+
+** 获取帮助
+   底部链接
+    - 帮助文档
+    - issue tracker
+    - IRC 聊天室
+    - 社区论坛
+    - 查询语句的语法
+
+
+** Logging
+
+  - 黄色高亮的有记录日志的能力
+  - 黑体字部分不受root影响
+
+
+** Cloud
+*** Tree
+    显示zookeeper内部数据
+
+*** graph
+    显示collection的分片信息
+
+*** Dump
+    获取一份ZooKeeper中的solr数据快照。（帮助调试）
+
+
+** Collections / Core Admin
+   一个实例时叫CoreAdmin 多个实例Collection
+
+
+** Thread Dump
+   监视当前活动的线程，绿色对号是RUNNABLE
+   鼠标放到名字上会有状态显示:
+    | name          | desc         |
+    | NEW           | 未启动       |
+    | RUNNABLE      | 在jvm中运行  |
+    | BLOCKED       | 阻塞         |
+    | WAITING       | 等待         |
+    | TIMED_WAITING | 有时间的等待 |
+    | TERMINATED    | 退出         |
+
+
+** Collection-Specific Tools(只有在cloud下才能看到)
+
+*** Analysis
+    分析查询语句
+
+*** Documents
+    更新数据
+
+*** Files
+    configuration files | solrCloud展示的是ZooKeeper中的配置文件
+    1. solrconfig.xml
+      - 定义了solr如何索引内容和响应请求
+    2. Schema 定义数据类型
+      - 文档字段
+ 
+
+*** Stream
+    raw版本的query界面
+
+
+*** Schema
+
+    1. 选择字段
+    2. load term info 加载根据条件取出的前N个的信息(只从Collection的一个Core取数据作为样本)
+
+
+** Core-Specific Tools
+
+*** Ping
+    查看是否能访问
+    - http://localhost:8983/solr/<core-name>/admin/ping
+    - http://localhost:8983/solr/gettingstarted_shard1_replica1/admin/ping?_=1481531966193&ts=1481531966193&wt=json
+
+
+*** Segment
+    当前核心的片段数据
+* Documents, Fields, and Schema Design
+
+** Overview
+*** 原理简介
+   - feed in (indexing or updating)
+   - ask questions (query)
+*** Field Analysis
+    告诉solr如何处理字段，如需要忽略的字段与转换形式（a,the,an,Running=>run）
+*** Schema File
+  告诉solr如何对输入的文档简历索引
+  - 默认为*managed-schema*文件
+  - Cloud模式没有此文件，只能通过api或者cloud-ui看到
+  - api方式修改只能修改*managed schema*指定的文件
+  - solrCloud不通过api方式修改schema只能通过 upconfig 和 downconfg 让ZooKeeper管理配置文件
+
+
+** Schema Detail
+   server/
+*** Solr Field Types
+**** TODO Field Type Definitions and Properties（完善属性定义） 
+    1. 字段类型定义可以包含四种类型
+       - name 必须
+       - class 必须
+       - 如果字段类型是TextField，可以加上对field analysis
+       - 字段类型的属性，取决于class
+    2. 类型定义
+       - 放在fieldType标签中
+       - 可以用type标签分组
+    3. Field Type Properties
+       - <fieldType name="date" class="solr.TrieDateField" sortMissingLast="true" omitNorms="true"/>
+       - 属性被分成三种
+         1) 针对field type的class的属性
+         2) 常规属性
+            - name
+            - class
+            - positionIncrementGap (对multivalue field 处理时，给两个field的词人为加上distance)
+            - autoGeneratePhraseQueries
+            - docValuesFormat (docValues的格式)
+            - postingsFormat
+         3) 字段默认属性（替换继承的默认属性）
+            - indexed (是否建立索引)
+            - stored (是否存储内容)
+            - docValues ( 可以提升如排序,分面,高亮的性能)
+            - sortMissingFirst/sortMissingLast
+            - multiValued (多值)
+    4. 例子:
+    #+BEGIN_SRC xml
+      <fieldType name="ancestor_path" class="solr.TextField">
+        <analyzer type="index">
+          <tokenizer class="solr.KeywordTokenizerFactory"/>
+        </analyzer>
+        <analyzer type="query">
+          <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="/"/>
+        </analyzer>
+      </fieldType>
+    #+END_SRC
+
+**** TODO Field Types Included with Solr 
+**** TODO Working with Currencies and Exchange Rates 
+**** TODO Working with Dates 
+**** TODO Working with Enum Fields 
+**** TODO Working with External Files and Processes
+
+
+*** Defining Fields
+**** example
+    - <field name="price" type="float" default="0.0" indexed="true" stored="true"/>
+
+**** Field Properties
+    - name (must)
+    - type (must)
+    - default (optional)
+
+**** TODO Optional Field Type Override Properties
+    会覆盖掉 fieldType 属性的属性
+
+
+*** Copying Fields
+    - 为一个数据应用多种不同的字段类型
+    - 需要搜索多个字段, 可以通过*copyField*组成一个字段，然后配置成默认搜索此字段。
+    - 使用*copyField*会造成索引数据的增长
+    - source和dest开头或者结尾可以有*表示匹配所有(表示通配符)
+**** 主要字段
+      - source 被复制的字段名称
+      - dest 复制到的名称
+      - maxChars 限制从source最多复制的字符 (想要控制index大小时有用)
+
+**** example
+      #+BEGIN_SRC xml
+      <copyField source="cat" dest="text" maxChars="30000" />
+      <copyField source="*_t" dest="text" maxChars="25000" />
+      #+END_SRC
+      如果text中有数据，那么cat中的内容将会添加到text中。
+
+      如果dest的source是多个值组成的，或者dest有多个source需要把dest字段设置成multivalued="true"
+      #+BEGIN_SRC xml
+      <schema name="eshequn.post.db_post.0" version="1.1" xmlns:xi="http://www.w3.org/2001/XInclude">  
+        <fields>  
+          <field name="title" type="text" indexed="true" stored="false" />  
+          <field name="content" type="text" indexed="true" stored="false" />  
+          <field name="tc" type="text" indexed="true" stored="false" multiValued="true"/>  
+        </fields>  
+        <copyField source="title" dest="tc" />  
+        <copyField source="content" dest="tc" />  
+      <
+      /schema>
+      #+END_SRC
+
+
+*** Dynamic Fields
+   顾名思义，动态字段。
+    #+BEGIN_SRC xml
+    <dynamicField name="*_i" type="int" indexed="true" stored="true"/>
+    #+END_SRC
+
+
+*** Other Elements
+
+**** Unique Key
+      指定文档的唯一标志(更新文档的时候有用)
+**** Default Search Field & Query Operator
+      - <defaultSearchField/> 已经被df参数取代
+      - <solrQueryParserdefaultOperator="OR"/> 被q.op取代
+**** Similarity
+      用来在搜索时获取文档的相关度(score)。自定义评分器。
+      - 每个文档只能有一个全局的Similarity
+      - 默认行为BM25SimilarityFactory
+      - 通过<similarity/> 标签可以覆盖默认行为
+      - 可以通过两种形式实现
+      - [[http://static.oschina.net/uploads/space/2012/0327/191046_bwnq_100580.png]]
+      #+BEGIN_SRC xml
+      <similarity class="solr.BM25SimilarityFactory"/>
+      <similarity class="solr.DFRSimilarityFactory">
+          <str name="basicModel">P</str>
+          <str name="afterEffect">L</str>
+          <str name="normalization">H2</str>
+          <float name="c">7</float>
+      </similarity>
+      #+END_SRC
+
+
+*** Schema API
+      提供一种通过http请求来读取和修改schema的方式
+      - schema修改之后只会改变后来的文档索引形式，不会改变之前的索引文档。所以必须重新索引所有的文档
+      - output format： json | xml
+      - http://<host>:<port>/solr/<collection_name>/schema/
+**** API Entry Points
+      - /schema: retrieve the schema, or modify the schema to add, remove, or replace fields, dynamic fields, copy fields, or field types 
+      - /schema/fields: retrieve information about all defined fields or a specific named field 
+      - /schema/dynamicfields: retrieve information about all dynamic field rules or a specific named dynamic rule 
+      - /schema/fieldtypes: retrieve information about all field types or a specific field type 
+      - /schema/copyfields: retrieve information about copy fields 
+      - /schema/name: retrieve the schema name 
+      - /schema/version: retrieve the schema version 
+      - /schema/uniquekey: retrieve the defined uniqueKey 
+      - /schema/similarity: retrieve the global similarity definition 
+      - /schema/solrqueryparser/defaultoperator: retrieve the default operator
+
+**** Modify the Schema
+      #+BEGIN_SRC curl -X POST -H 'Content-type:application/json' --data-binary '{
+          "add-field":{ "name":"sell-by", "type":"tdate", "stored":true } 
+      }' http://localhost:8983/solr/gettingstarted/schema
+      #+END_SRC
+
+***** Schema Changes among Replicas
+     在一个复制集上做的更改会改到其他的复制集上面
+
+**** Retrieve Schema Information
+      #+BEGIN_SRC 
+      curl http://localhost:8983/solr/gettingstarted/schema?wt=json
+      curl http://localhost:8983/solr/gettingstarted/schema?wt=xml
+      curl http://localhost:8983/solr/gettingstarted/schema?wt=schema.xml
+      curl http://localhost:8983/solr/gettingstarted/schema/fields?wt=json[fl=string,string
+      &includeDynamic=bool&showDefaults=bool]
+      #+END_SRC
+
+
+*** Putting the Pieces Together
+
+**** Choosing Appropriate Numeric Types
+      1. 一般情况下 使用
+        - TrieIntField
+        - TrieLongField
+        - TrieFloatField
+        - TrieDoubleFiel
+        - precisionStep="0"
+      2. 数字经常被指定范围
+        - precisionStep="8"
+
+
+**** Working With Text
+
+    1. 通过使用一个txt field将所有字段汇总成一个搜索(用到了copyField)
+    2. 通过copyField将一个字段作为不同的用处
+
+
+**** DocValues
+    - 传统的index是一种倒排索引[fn:index_style] 并且是term-to-document的list,对于使用term来搜索时，这种方式很快
+    - 但是若是使用facet、sort、hightlight这些特性，就会很慢
+    - docvalues 是一种 面向列 的字段索引方式，并且使用了document-to-value的list
+    - indexed 和 docValues 只能指定一个为true
+    - 只能开启以下几个类型的docValues
+      1. StrField
+      2. UUIDField
+      3. Trie* numeric fields
+      4. date
+      5. EnumField
+
+**** TODO Using DocValues
+
+**** TODO Schemaless Mode
+
+
+[fn:index_style] 正排索引是指由文档找词，倒排索引是指由词找文档
+* TODO Using Analyzers, Tokenizers, and Filters
+
+
+** 
+* Indexing and Basic Data Operations
+  三种常用的方式可以向solr index中填充数据
+  - Solr Cell
+  - xml file
+  - Solr's Java Client API
+  填入的数据总是要包含多个字段，每个字段都有一个name和一个content
+  实验文件夹：example/exampledocs/
+
+** Post Tool
+
+*** bin/post
+  #+BEGIN_SRC sh
+  bin/post -c gettingstarted example/films/films.json
+  bin/post -h
+  bin/post -c gettingstarted *.xml
+  bin/post -c gettingstarted -p 8984 *.xml
+  bin/post -c gettingstarted -d '<delete><id>42</id></delete>'
+  bin/post -c gettingstarted *.csv
+  bin/post -c gettingstarted -params "separator=%09" -type text/csv data.csv
+  bin/post -c gettingstarted *.json
+  bin/post -c gettingstarted a.pdf
+
+  bin/post -p port -host host -c collection_name json_file.json
+  # 自动检测文件夹中的文档类型，递归的进行索引数据
+  bin/post -c gettingstarted afolder/
+  bin/post -c gettingstarted -filetypes ppt,html afolder/
+  # 索引一个带有密码的pdf 密码为SolrRocks
+  bin/post -u solr:SolrRocks -c gettingstarted a.pdf
+  #+END_SRC
+
+
+*** SimplePostTool
+    java -jar example/exampledocs/post.jar -h
+
+
+** Uploading Data with Index Handlers
+
+    #+BEGIN_SRC sh
+    curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/my_collection/update' --data-binary ' [ { "id": "1", "title": "Doc 1" }, { "id": "2", "title": "Doc 2" } ]'
+    # 指定文件
+    curl 'http://localhost:8983/solr/techproducts/update?commit=true' --data-binary @example/exampledocs/books.json -H 'Content-type:application/json'
+    #+END_SRC
+
+
+** TODO Uploading Data with Solr Cell using Apache Tika
+
+   导入多种不同的数据格式时有用，如二进制文件、word文档、pdf文档等。
+
+* Search
+  
+** Overview
+*** 输入查询语句
+*** 查询语句被 *request handler* 处理 (此插件定义了solr处理请求的逻辑)
+*** 调用 *query parser* (解析器解释查询的条件和参数)
+    1. 解析器的种类
+       1. Standard Query Parser (清晰)
+       2. DisMax (很少报错)
+       3. eDisMax (扩展版的DisMax，完全支持 lucene 查询语法)
+    2. common query parameters  (支持全部的解析器)
+    3. 解析器输入种类
+       1. 查询语句
+       2. 对查询语句的微调参数
+       3. 对查询结果展示的控制
+*** *filter query*(fq) (filter query 会开辟一块单独的缓存，这种策略对性能提升很大)
+     1. Filter queries 只查询索引中存在的数据
+*** 指定特定的条件高亮
+*** 返回结果可以有一个小片段，像是谷歌的搜索
+*** 对结果分组
+    1. faceting
+       1. facet 分组字段（对结果进行分组）
+       2. facet count 分组得到的结果的数量
+       3. constraints 分组得到的结果的值
+       4. breadcrumb 面包屑（已经应用的facet）
+       5. list 结果详情
+    2. clustering
+*** MoreLikeThis
+*** response writer (返回结果的形式)
+    1. XML Response Writer
+    2. JSON Response Writer
+
+
+**  通用查询语句
+*** defType: 
+    1. 选择查询解析器
+    2. dismax/lucene
+    3. defType=dismax
+   
+*** sort:  
+    1. 对返回结果排序，asc|desc
+    2. 可以对数字和字母排序
+    3. 排序规则
+       1. 根据文档相关程度排序
+       2. 或者是根据字段的值排序，这个字段的值要么被索引要么使用了*DocValues*
+    4. 单独字段排序：<field_name>+(asc|desc)
+    5. 多字段排序：sort=<field name>+<direction>,<field name>+<direction>],...
+
+*** start: 
+    - 初始位置
+
+*** rows: 
+    - 相当于mysql中的limit
+
+*** fq:
+    1. 对结果过滤的条件
+    2. 对将要返回的文档过滤（不会影响score【猜测是相关度】）
+    3. 对复杂的query进行加速，因为会对fq进行的查询独立进行缓存
+    4. fq参数可以出现多次
+       1. `fq=popularity:[10 TO *]&fq=section:0` （当条件经常单独出现时）
+       2. `fq=+popularity:[10 TO *] +section:0` (当条件经常单独出现时)
+    5. url-encoding 参考地址 ：  http://meyerweb.com/eric/tools/dencoder/
+
+*** fl:
+    1. 设定返回结果的字段,用逗号或者空格分开   
+    2. stored="true" or docValues="true" or useDocValuesAsStored="true"(在docvalues模式开启时是默认的)
+    3. 字段可以是个函数 如：fl=id,title,product(price,popularity)
+    4. 别名：fl=id,sales_price:price,secret_sauce:prod(price,popularity),why_score:[explain style=nl]
+
+*** debug:
+    1. 返回额外的调试信息。
+    2. debug=timing只返回时间信息.
+    3. debug=results返回对返回结果的每个文档的解释。
+    4. debug=all(true)将返回所有的调试信息。debugQuery=true
+
+*** explainOther:
+    - q=supervillians&debugQuery=on&explainOther=id\:juggernaut
+    - 返回调试信息
+    - 必须加上debugQuery=on否则不返回debug字段
+
+*** timeAllowed：
+    - 超过此时间之后，只会返回一部分数据
+
+*** omitHeader: 
+    - 不返回头部信息
+
+*** wt: 
+    - 返回结果的格式
+
+*** cache=false: 
+    - 停止缓存所有的查询和过滤条件的结果
+  
+*** logParamsList(version >= 4.7):
+    - 默认会记录所有的字段，logParamsList=param1,param2逗号分割的参数
+
+*** echoParams:
+    在response header 中的 params 字段中显示所用到的查询字段
+    1. explicit(默认)
+    2. all
+    3. none
+
+
+** The Standard Query Parser (lucene parser)
+   优点：直观，缺点：不能有语法错误
+*** q
+    查询语句，强制性
+    #+BEGIN_SRC
+    http://localhost:8983/solr/techproducts/select?q=id:SP2514N
+    q=*:* 查询全部,特殊情况
+    #+END_SRC
+    | ?                                                | 匹配单个字符                                                      |
+    | *                                                | 匹配多个字符                                                      |
+    | ~                                                | 模糊搜索 roam~ 将会匹配foam，foams等                              |
+    | ~1                                               | 模糊搜索 roam~ 将会匹配foam，不会匹配foams，因为foams改动了两个字 |
+    | "jakarta apache"~10                              | 两个词之间改动10个位置可以匹配到                                  |
+    | mod_date:[20020101 TO 20030101]                  | 范围查询                                                          |
+    | title:{Aida TO Smith}                            | 大括号表示不包含上下边界                                          |
+    | jakarta^4 apache                                 | boost factor 可以通过改变这个值改变查询时的相关度,可以小于1       |
+    | (description:blue OR color:blue)^=1.0 text:shoes | 将匹配括号中的语句的文档相关度设置成1                             |
+    | title:"The Right Way" AND text:go                | 指定字段查询                                                      |
+    | title:"Do it right" AND go                       | 第二个字段直接查询默认搜索字段                                    |
+    | (AND/&&),(OR/ll),(+),(-),(NOT !)                 | 操作符                                                            |
+    | + - && ll ! ( ) { } [ ] ^ " ~ * ? : /            | 需要转义的字符                                                    |
+    | (jakarta OR apache) AND website                  | 表达式 website存在并且有jakarta或者apache                         |
+
+
+*** q.op
+    指定查询语句默认是用*AND*还是*OR*
+
+
+*** df
+    指定默认搜索的字段
+
+
+** TODO The DisMax Query Parser
+   
+*** Parameters
+
+
+** Faceting
+   对结果进行分类(分组),很方便查询每个条件有多少文档。
+   必要条件：facet的字段必须被索引indexed=true
+*** General Parameters
+    1. facet=true(on) ,  默认为假
+       1. 不会改变结果字段，只会添加一个 facet_counts 字段
+    2. facet.query 指定计算count的表达式
+       facet.query={!myfunc}name~fred
+
+*** Field-Value Faceting Parameters
+    1. facet.field  
+        分组的字段
+    2. facet.prefix 
+       限制facet.field 的前缀，不同则不分类
+    3. facet.limit  
+        facet_counts 字段返回条数, 默认100
+    4. facet.sort
+       - count 根据数量排序
+       - index (default)
+    5. facet.offset 
+        开始条数,偏移量,它与facet.limit配合使用可以达到分页的效果
+    6. facet.mincount 
+       facet_counts 字段中最小的数量，低于此值不显示
+    7. facet.missing 
+       是否返回没有值的field
+    8. facet.method 
+        取值为enum或fc,默认为fc, fc表示Field Cache
+       - enum 适用于值较少的
+  
+
+*** facet.pivot
+    不会翻译， 作用比较像是 mysql 中将两个字段进行分组,然后rollup,获得一个统计数据
+    返回字段 facet_count.facet_pivot
+    - http://localhost:8983/solr/techproducts/select?q=*:*&facet.pivot=cat,popularity,inStock&facet.pivot=popularity,cat&facet=true&facet.field=cat&facet.limit=5&rows=0&wt=json&indent=true&facet.pivot.mincount=2
+
+
+
+** Highlighter
+
+*** Standard Highlighter
+
+* solrCloud
+  server/solr
+** features
+  1. 集中式配置管理
+  2. 自动化负载均衡和故障切换
+  3. ZooKeeper 整合
+
+
+** 相关概念
+*** Node
+    solr实例
+*** Cluster
+    可以包含多个Collection，由一个或者多个node组成
+*** Collection
+    在SolrCloud集群中逻辑意义上的完整的索引, 可以分到多个Shards上
+*** Config Set
+    Solr Core提供服务必须的一组配置文件
+*** Leader
+    赢得选举的Shard replicas
+*** Replica
+    Shard的一个拷贝
+*** Shard
+    Collection的逻辑分片。一个shard上面一个leader replica
+*** Zookeeper
+    Zookeeper提供分布式锁功能，对SolrCloud是必须的。它处理Leader选举。Solr可以以内嵌的Zookeeper运行，但是建议用独立的，并且最好有3个以上的主机。 
+
+
+** 配置外部 ZooKeeper
+   *需要多少Zookeeper* 想要挂掉F个机器时还能正常提供服务，就需要 2*F+1 台机器
+   下载地址： http://zookeeper.apache.org/releases.html
+*** 一个实例
+   - <ZOOKEEPER_HOME>/conf/zoo.cfg
+   #+BEGIN_SRC   
+   # 一个滴答（时间单位， 毫秒）
+   tickTime=2000 
+   # 数据文件夹
+   dataDir=/var/lib/zookeeper
+   # 端口号
+   clientPort=2181 
+   #+END_SRC
+
+
+*** 集群
+**** 配置文件
+    - zoo.cfg
+      #+BEGIN_SRC 
+      dataDir=/var/lib/zookeeperdata/1
+      clientPort=2181
+      # 初始化连接最大忍受的滴答次数
+      initLimit=5
+      # leader 与 follower 发送消息最大的等待时间
+      syncLimit=2
+      # server.{第几号服务器}={ip地址}:{服务器与leader交换信息的端口}:{leader服务器挂掉之后，选举信息通信的端口}
+      server.1=localhost:2888:3888
+      server.2=localhost:2889:3889
+      server.3=localhost:2890:3890
+      #+END_SRC
+
+    - zoo2.cfg
+      #+BEGIN_SRC 
+      tickTime=2000
+      dataDir=~/self/zoo/zoodata/2
+      clientPort=2182
+      initLimit=5
+      syncLimit=2
+      server.1=localhost:2888:3888
+      server.2=localhost:2889:3889
+      server.3=localhost:2890:3890
+      #+END_SRC
+
+    - zoo3.cfg
+      #+BEGIN_SRC sh
+      tickTime=2000
+      dataDir=~/self/zoo/zoodata/3
+      clientPort=2183
+      initLimit=5
+      syncLimit=2
+      server.1=localhost:2888:3888
+      server.2=localhost:2889:3889
+      server.3=localhost:2890:3890
+      #+END_SRC
+
+    - myid file
+      #+BEGIN_SRC sh
+      mkdir -p zoodata/{1,2,3}
+      echo 1 > 1/myid
+      echo 2 > 2/myid
+      echo 3 > 3/myid
+      #+END_SRC
+
+    -  启动三个zookeeper
+    cd <ZOOKEEPER_HOME>
+    bin/zkServer.sh start zoo.cfg
+    bin/zkServer.sh start zoo2.cfg
+    bin/zkServer.sh start zoo3.cfg
+    - 引用外部zookeeper
+    bin/solr start -e cloud -z localhost:2181,localhost:2182,localhost:2183 -noprompt
+    #+BEGIN_SRC 
+    ➜  zoo bin/zkServer.sh status zoo.cfg
+    ZooKeeper JMX enabled by default
+    Using config: /Users/wudanyang/self/zoo/bin/../conf/zoo.cfg
+    Mode: follower
+    ➜  zoo bin/zkServer.sh status zoo2.cfg
+    ZooKeeper JMX enabled by default
+    Using config: /Users/wudanyang/self/zoo/bin/../conf/zoo2.cfg
+    Mode: leader
+    ➜  zoo bin/zkServer.sh status zoo3.cfg
+    ZooKeeper JMX enabled by default
+    Using config: /Users/wudanyang/self/zoo/bin/../conf/zoo3.cfg
+    Mode: follower
+    #+END_SRC
+
+
+
+*** 通过zookeeper管理配置文件
+    上传配置文件
+    sh zkcli.sh -cmd upconfig -zkhost <host:port> -confname <name for configset> -solrhome <solrhome> -confdir <path to directory with configset>
+    cd /Users/wudanyang/self/solr/server/scripts/cloud-scripts
+    sh zkcli.sh -cmd upconfig -zkhost localhost:2181 -confname yang -confdir ../../../server/solr/configsets/basic_configs/conf
+
+
+*** 添加 node
+   - zkServer.sh start *.cfg
+   - bin/solr start -cloud -s <conf path> -p 8987 -z localhost:2181 # 添加一个节点,配置文件夹中必须包含一个solr.xml文件
+   - bin/solr start -cloud -s confs/cloud/conf/ -p 8984 -z localhost:2181,localhost:2182,localhost:2183
+   - zkServer.sh stop
+
+    
+*** Collections API
+    创建多个shard需要多个node
+    nodeNum = shardNum * replicationFactorNum
+    - http://localhost:8983/solr/admin/collections?action=CREATE&name=yang&numShards=1&replicationFactor=3&collection.configName=yang
+    - http://localhost:8983/solr/admin/collections?action=RELOAD&name=yang_test2
+
+
+** Run Examples
+*** 通过 bin/solr restart 可以重启节点
+    bin/solr restart -c -p 8983 -s example/cloud/node1/solr
+    -c 启动solrcloud模式
+    -p 指定端口
+    -h 指定host
+    bin/solr restart -c -p 7574 -z localhost:9983 -s example/cloud/node2/solr
+    -z zookeeper服务器地址
+*** 向集群中添加一个节点
+    mkdir <solr.home for new solr node>
+    cp <existing solr.xml path> <new solr.home>
+    bin/solr start -cloud -s solr.home/solr -p <port num> -z <zk hosts string>
+    bin/solr start -cloud -s <conf path> -p 8987 -z localhost:2181 # 添加一个节点,配置文件夹中必须包含一个solr.xml文件
+
+    也可以通过以下命令,将solr.xml上传到zookeeper，这样就不用总是复制solr.xml到新的节点
+    zkcli.sh -zkhost localhost:2181 -cmd putfile /solr.xml /path/to/solr.xml
+
+**** example
+     mkdir -p example/cloud/node3/solr
+     cp server/solr/solr.xml example/cloud/node3/solr
+     第一次以cloud模式启动时会启动一个zookeeper服务器端口号是cloud端口号加上1000
+     bin/solr start -cloud -s example/cloud/node3/solr -p 8987 -z localhost:9983
+* Issues
+
+** 学习时遇到的问题
+*** Q: ZooKeeper JMX enabled by default Using config: /Users/wudanyang/self/zoo/bin/../conf/zoo.cfg Error contacting service. It is probably not running.
+
+    A: bin/zkServer.sh start-foreground 可以查看到
+
+*** Q: ZooKeeper 执行 bin/zkServer.sh status 说未启动
+
+    A: ps aux | grep zookeeper
+查看是否存在
+
+*** Q: SolrCore Initialization Failures
+
+    A: 未上传配置
+    sh zkcli.sh -cmd upconfig -zkhost localhost:2181 -confname gettingstarted -confdir ../../../server/solr/configsets/basic_configs/conf
+
+
+*** Q: 通过api创建collection时, 返回localhost未返回任何数据
+
+    A: 请求地址应该是solr服务器，而不是zookeeper服务器。
+localhost:8983/solr/admin/collectinos?action=CREATE&name=yang&numShards=1&replicationFactor=3&collection.configName=yang
+
+
+*** Q: Cannot create collection tinycollection. Value of maxShardsPerNode is 1, and the number of live nodes is 4. This allows a maximum of 4 to be created. Value of numShards is 2 and value of replicationFactor is 3. This requires 6 shards to be created (higher than the allowed number)</str>  
+
+    A:将replicationFactor降低
+http://localhost:8983/solr/admin/collections?action=CREATE&name=yang&collection.configName=yang&numShards=1&replicationFactor=1&wt=json
+
+
+*** Q: 在zookeeper中找不到配置文件
+
+    A: 配置文件疑似在上传到zookeeper时放到了名为zoo_data/version-{num}/log.number的二进制文件中
+
+
+*** Q: 为何在6.*以上的solr中store=false 仍然能看到字段被返回了
+
+    A: 在6.*之后，string 的 docValues=true 为默认值
+
+
+*** Q: int类型为何docValues=false与stored=false还能在结果中看到字段
+
+    A: 未知
+
+
+*** Q: 从 example/example-DIH/solr/ 中复制solr.xml 作为cloud的配置文件无法生效 
+
+    A: 因为默认的配置文件里面有 standalone="yes" 及不使用集群方式
+
+*** Q: 为什么找不到 Can't find resource 'schema.xml'
+
+    A: example 文件夹中的配置文件为 managed-schema 需要改成 schema.xml 上传才行
+
+    
+** 公司系统发现的问题
+
+   1. 脚本文件处于无版本控制状态
+      创建git本地库，后续可以跟运维商量加上一个solr脚本的git库
+
+* Cache
+  缓存在 Solr 中充当了一个非常重要的角色，Solr 中主要有这三种缓存：
+  1. Filter cache（过滤器缓存），用于保存过滤器（fq 参数）和层面搜索的结果
+  2. Document cache（文档缓存），用于保存 lucene 文档存储的字段
+  3. Query result（查询缓存），用于保存查询的结果
+  4. 还有第四种缓存，lucene 内部的缓存，不过该缓存外部无法控制到。
+
+  通过这 3 种缓存，可以对 solr 的搜索实例进行调优。调整这些缓存，需要根据索引库中文档的数量，每次查询结果的条数等。
+  在调整参数前，需要事先得到 solr 示例中的以下信息： 索引中文档的数量 每秒钟搜索的次数 过滤器的数量 一次查询返回最大的文档数量
+  不同查询和不同排序的个数，这些数量可以在 solr admin 页面的日志模块找到。
+
+  假设以上的值分别为：
+  索引中文档的数量：1000000
+  每秒钟搜索的次数：100
+  过滤器的数量：200
+  一次查询返回最大的文档数量：100
+  不同查询和不同排序的个数：500
+  然后可以开始修改 solrconfig.xml 中缓存的配置了，
+
+
+
+  第一个是过滤器缓存：
+  第二个是查询结果缓存：
+  第三个是文档缓存：
+  这几个配置是基于以上的几个假设的值进行调优的。

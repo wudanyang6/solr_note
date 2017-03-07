@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2017-03-07 Tue 11:42 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title></title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="吴丹阳" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org7d47fd9">1. Documents, Fields, and Schema Design</a>
+<ul>
+<li><a href="#orgc0ac7fa">1.1. Overview</a>
+<ul>
+<li><a href="#org8ed020f">1.1.1. 原理简介</a></li>
+<li><a href="#org8651d57">1.1.2. Field Analysis</a></li>
+<li><a href="#orgbe70e68">1.1.3. Schema File</a></li>
+</ul>
+</li>
+<li><a href="#org8aa60bd">1.2. Schema Detail</a>
+<ul>
+<li><a href="#org5fd2dfa">1.2.1. Solr Field Types</a></li>
+<li><a href="#org460de77">1.2.2. Defining Fields</a></li>
+<li><a href="#orgd709ce9">1.2.3. Copying Fields</a></li>
+<li><a href="#org5c5d604">1.2.4. Dynamic Fields</a></li>
+<li><a href="#orgdbeb95d">1.2.5. Other Elements</a></li>
+<li><a href="#org093b687">1.2.6. Schema API</a></li>
+<li><a href="#orgc5a0bde">1.2.7. Putting the Pieces Together</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7d47fd9" class="outline-2">
+<h2 id="org7d47fd9"><span class="section-number-2">1</span> Documents, Fields, and Schema Design</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-orgc0ac7fa" class="outline-3">
+<h3 id="orgc0ac7fa"><span class="section-number-3">1.1</span> Overview</h3>
+<div class="outline-text-3" id="text-1-1">
+</div><div id="outline-container-org8ed020f" class="outline-4">
+<h4 id="org8ed020f"><span class="section-number-4">1.1.1</span> 原理简介</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<ul class="org-ul">
+<li>feed in (indexing or updating)</li>
+<li>ask questions (query)</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org8651d57" class="outline-4">
+<h4 id="org8651d57"><span class="section-number-4">1.1.2</span> Field Analysis</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+告诉solr如何处理字段，如需要忽略的字段与转换形式（a,the,an,Running=&gt;run）
+</p>
+</div>
+</div>
+<div id="outline-container-orgbe70e68" class="outline-4">
+<h4 id="orgbe70e68"><span class="section-number-4">1.1.3</span> Schema File</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<p>
+告诉solr如何对输入的文档简历索引
+</p>
+<ul class="org-ul">
+<li>默认为*managed-schema*文件</li>
+<li>Cloud模式没有此文件，只能通过api或者cloud-ui看到</li>
+<li>api方式修改只能修改*managed schema*指定的文件</li>
+<li>solrCloud不通过api方式修改schema只能通过 upconfig 和 downconfg 让ZooKeeper管理配置文件</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org8aa60bd" class="outline-3">
+<h3 id="org8aa60bd"><span class="section-number-3">1.2</span> Schema Detail</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+server/
+</p>
+</div>
+<div id="outline-container-org5fd2dfa" class="outline-4">
+<h4 id="org5fd2dfa"><span class="section-number-4">1.2.1</span> Solr Field Types</h4>
+<div class="outline-text-4" id="text-1-2-1">
+</div><ol class="org-ol"><li><a id="org17bfd54"></a><span class="todo TODO">TODO</span> Field Type Definitions and Properties（完善属性定义）<br  /><div class="outline-text-5" id="text-1-2-1-1">
+<ol class="org-ol">
+<li>字段类型定义可以包含四种类型
+<ul class="org-ul">
+<li>name 必须</li>
+<li>class 必须</li>
+<li>如果字段类型是TextField，可以加上对field analysis</li>
+<li>字段类型的属性，取决于class</li>
+</ul></li>
+<li>类型定义
+<ul class="org-ul">
+<li>放在fieldType标签中</li>
+<li>可以用type标签分组</li>
+</ul></li>
+<li>Field Type Properties
+<ul class="org-ul">
+<li>&lt;fieldType name="date" class="solr.TrieDateField" sortMissingLast="true" omitNorms="true"/&gt;</li>
+<li>属性被分成三种
+<ol class="org-ol">
+<li>针对field type的class的属性</li>
+<li>常规属性
+<ul class="org-ul">
+<li>name</li>
+<li>class</li>
+<li>positionIncrementGap (对multivalue field 处理时，给两个field的词人为加上distance)</li>
+<li>autoGeneratePhraseQueries</li>
+<li>docValuesFormat (docValues的格式)</li>
+<li>postingsFormat</li>
+</ul></li>
+<li>字段默认属性（替换继承的默认属性）
+<ul class="org-ul">
+<li>indexed (是否建立索引)</li>
+<li>stored (是否存储内容)</li>
+<li>docValues ( 可以提升如排序,分面,高亮的性能)</li>
+<li>sortMissingFirst/sortMissingLast</li>
+<li>multiValued (多值)</li>
+</ul></li>
+</ol></li>
+</ul></li>
+<li>例子:</li>
+</ol>
+<div class="org-src-container">
+<pre class="src src-xml">&lt;<span style="color: #00ff7f;">fieldType</span> <span style="color: #9acd32;">name</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">ancestor_path</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">class</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">solr.TextField</span><span style="color: #ffa07a;">"</span>&gt;
+  &lt;<span style="color: #00ff7f;">analyzer</span> <span style="color: #9acd32;">type</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">index</span><span style="color: #ffa07a;">"</span>&gt;
+    &lt;<span style="color: #00ff7f;">tokenizer</span> <span style="color: #9acd32;">class</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">solr.KeywordTokenizerFactory</span><span style="color: #ffa07a;">"</span>/&gt;
+  &lt;/<span style="color: #00ff7f;">analyzer</span>&gt;
+  &lt;<span style="color: #00ff7f;">analyzer</span> <span style="color: #9acd32;">type</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">query</span><span style="color: #ffa07a;">"</span>&gt;
+    &lt;<span style="color: #00ff7f;">tokenizer</span> <span style="color: #9acd32;">class</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">solr.PathHierarchyTokenizerFactory</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">delimiter</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">/</span><span style="color: #ffa07a;">"</span>/&gt;
+  &lt;/<span style="color: #00ff7f;">analyzer</span>&gt;
+&lt;/<span style="color: #00ff7f;">fieldType</span>&gt;
+</pre>
+</div>
+</div></li>
+
+<li><a id="orgaee3af9"></a><span class="todo TODO">TODO</span> Field Types Included with Solr<br  /></li>
+<li><a id="orgbce13ef"></a><span class="todo TODO">TODO</span> Working with Currencies and Exchange Rates<br  /></li>
+<li><a id="org3a1f288"></a><span class="todo FEEDBACK">FEEDBACK</span> Working with Dates<br  /><ol class="org-ol"><li><a id="org0fef217"></a>时间格式<br  /><div class="outline-text-6" id="text-1-2-1-4-1">
+<p>
+YYYY-MM-DDThh:mm:ssZ
+</p>
+<ul class="org-ul">
+<li>Z 表示日期为 UTC</li>
+<li>没有时区</li>
+<li>只能精确到毫秒</li>
+<li>1972-05-20T17:33:18Z 日期和年份中间必须要有 - 分割</li>
+<li><p>
+冒号有时需要转义，下面十几个正确的表达式：
+datefield:1972-05-20T17\:33\:18.772Z
+</p>
+
+<p>
+datefield:"1972-05-20T17:33:18.772Z"
+</p>
+
+<p>
+datefield:<span class="timestamp-wrapper"><span class="timestamp">[1972-05-20 Sat]</span></span>
+</p></li>
+</ul>
+</div>
+<ol class="org-ol"><li><a id="org90b1617"></a>时间范围的格式<br  /><div class="outline-text-7" id="text-1-2-1-4-1-1">
+<ul class="org-ul">
+<li>2000-11
+十一月</li>
+<li>2000-11T13
+与上个大致相同，但是表示的是 13 点这一个小时</li>
+<li>-0009
+公元前 10 年，公元 0 年代表公元前 1 年</li>
+<li><span class="timestamp-wrapper"><span class="timestamp">[2000-11-01 Wed]</span></span>
+日期粒度的时间间隔</li>
+<li>[2014 TO 2014-12-01]
+从 2014 年开始的一天到 12 月 01 日</li>
+<li>[* TO 2014-12-01]
+从最早的时间到指定时间</li>
+<li>限制：
+范围语法不支持数学运算</li>
+</ul>
+</div></li></ol></li>
+<li><a id="orgeab8302"></a>时间运算<br  /><div class="outline-text-6" id="text-1-2-1-4-2">
+<ol class="org-ol">
+<li>对现有时间的加减运算
+<ul class="org-ul">
+<li>NOW+2MONTHS 从现在开始的两个月</li>
+<li>NOW-1DAY 昨天</li>
+</ul></li>
+<li>对现有时间指定单位的舍入
+<ul class="org-ul">
+<li>NOW/HOUR 对现在时间舍入，取当前小时的开始那一个时间点</li>
+<li>NOW+6MONTHS+3DAYS/DAY 取 6 个月 3 天之后的那天的最开始</li>
+</ul></li>
+</ol>
+</div></li></ol></li>
+<li><a id="org48a0d5b"></a><span class="todo TODO">TODO</span> Working with Enum Fields<br  /></li>
+<li><a id="org69a0d64"></a><span class="todo TODO">TODO</span> Working with External Files and Processes<br  /></li></ol>
+</div>
+
+
+<div id="outline-container-org460de77" class="outline-4">
+<h4 id="org460de77"><span class="section-number-4">1.2.2</span> Defining Fields</h4>
+<div class="outline-text-4" id="text-1-2-2">
+</div><ol class="org-ol"><li><a id="orgb3d26e1"></a>example<br  /><div class="outline-text-5" id="text-1-2-2-1">
+<ul class="org-ul">
+<li>&lt;field name="price" type="float" default="0.0" indexed="true" stored="true"/&gt;</li>
+</ul>
+</div></li>
+
+<li><a id="orgbe6ca76"></a>Field Properties<br  /><div class="outline-text-5" id="text-1-2-2-2">
+<ul class="org-ul">
+<li>name (must)</li>
+<li>type (must)</li>
+<li>default (optional)</li>
+</ul>
+</div></li>
+
+<li><a id="orga7b6350"></a><span class="todo TODO">TODO</span> Optional Field Type Override Properties<br  /><div class="outline-text-5" id="text-1-2-2-3">
+<p>
+会覆盖掉 fieldType 属性的属性
+</p>
+</div></li></ol>
+</div>
+
+
+<div id="outline-container-orgd709ce9" class="outline-4">
+<h4 id="orgd709ce9"><span class="section-number-4">1.2.3</span> Copying Fields</h4>
+<div class="outline-text-4" id="text-1-2-3">
+<ul class="org-ul">
+<li>为一个数据应用多种不同的字段类型</li>
+<li>需要搜索多个字段, 可以通过*copyField*组成一个字段，然后配置成默认搜索此字段。</li>
+<li>使用*copyField*会造成索引数据的增长</li>
+<li>source和dest开头或者结尾可以有*表示匹配所有(表示通配符)</li>
+</ul>
+</div>
+<ol class="org-ol"><li><a id="org7c27102"></a>主要字段<br  /><div class="outline-text-5" id="text-1-2-3-1">
+<ul class="org-ul">
+<li>source 被复制的字段名称</li>
+<li>dest 复制到的名称</li>
+<li>maxChars 限制从source最多复制的字符 (想要控制index大小时有用)</li>
+</ul>
+</div></li>
+
+<li><a id="org8bc902d"></a>example<br  /><div class="outline-text-5" id="text-1-2-3-2">
+<div class="org-src-container">
+<pre class="src src-xml">&lt;<span style="color: #00ff7f;">copyField</span> <span style="color: #9acd32;">source</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">cat</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">dest</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">text</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">maxChars</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">30000</span><span style="color: #ffa07a;">"</span> /&gt;
+&lt;<span style="color: #00ff7f;">copyField</span> <span style="color: #9acd32;">source</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">*_t</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">dest</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">text</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">maxChars</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">25000</span><span style="color: #ffa07a;">"</span> /&gt;
+</pre>
+</div>
+<p>
+如果text中有数据，那么cat中的内容将会添加到text中。
+</p>
+
+<p>
+如果dest的source是多个值组成的，或者dest有多个source需要把dest字段设置成multivalued="true"
+</p>
+<div class="org-src-container">
+<pre class="src src-xml">&lt;<span style="color: #00ff7f;">schema</span> <span style="color: #9acd32;">name</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">eshequn.post.db_post.0</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">version</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">1.1</span><span style="color: #ffa07a;">"</span> <span style="color: #76ee00;">xmlns</span>:<span style="color: #9acd32;">xi</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">http://www.w3.org/2001/XInclude</span><span style="color: #ffa07a;">"</span>&gt;  
+  &lt;<span style="color: #00ff7f;">fields</span>&gt;  
+    &lt;<span style="color: #00ff7f;">field</span> <span style="color: #9acd32;">name</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">title</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">type</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">text</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">indexed</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">true</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">stored</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">false</span><span style="color: #ffa07a;">"</span> /&gt;  
+    &lt;<span style="color: #00ff7f;">field</span> <span style="color: #9acd32;">name</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">content</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">type</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">text</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">indexed</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">true</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">stored</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">false</span><span style="color: #ffa07a;">"</span> /&gt;  
+    &lt;<span style="color: #00ff7f;">field</span> <span style="color: #9acd32;">name</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">tc</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">type</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">text</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">indexed</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">true</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">stored</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">false</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">multiValued</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">true</span><span style="color: #ffa07a;">"</span>/&gt;  
+  &lt;/<span style="color: #00ff7f;">fields</span>&gt;  
+  &lt;<span style="color: #00ff7f;">copyField</span> <span style="color: #9acd32;">source</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">title</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">dest</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">tc</span><span style="color: #ffa07a;">"</span> /&gt;  
+  &lt;<span style="color: #00ff7f;">copyField</span> <span style="color: #9acd32;">source</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">content</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">dest</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">tc</span><span style="color: #ffa07a;">"</span> /&gt;  
+&lt;
+/schema&gt;
+</pre>
+</div>
+</div></li></ol>
+</div>
+
+
+<div id="outline-container-org5c5d604" class="outline-4">
+<h4 id="org5c5d604"><span class="section-number-4">1.2.4</span> Dynamic Fields</h4>
+<div class="outline-text-4" id="text-1-2-4">
+<p>
+顾名思义，动态字段。
+</p>
+<div class="org-src-container">
+<pre class="src src-xml">&lt;<span style="color: #00ff7f;">dynamicField</span> <span style="color: #9acd32;">name</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">*_i</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">type</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">int</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">indexed</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">true</span><span style="color: #ffa07a;">"</span> <span style="color: #9acd32;">stored</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">true</span><span style="color: #ffa07a;">"</span>/&gt;
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgdbeb95d" class="outline-4">
+<h4 id="orgdbeb95d"><span class="section-number-4">1.2.5</span> Other Elements</h4>
+<div class="outline-text-4" id="text-1-2-5">
+</div><ol class="org-ol"><li><a id="orgd518238"></a>Unique Key<br  /><div class="outline-text-5" id="text-1-2-5-1">
+<p>
+指定文档的唯一标志(更新文档的时候有用)
+</p>
+</div></li>
+<li><a id="orga82a74b"></a>Default Search Field &amp; Query Operator<br  /><div class="outline-text-5" id="text-1-2-5-2">
+<ul class="org-ul">
+<li>&lt;defaultSearchField/&gt; 已经被df参数取代</li>
+<li>&lt;solrQueryParserdefaultOperator="OR"/&gt; 被q.op取代</li>
+</ul>
+</div></li>
+<li><a id="org433fb07"></a>Similarity<br  /><div class="outline-text-5" id="text-1-2-5-3">
+<p>
+用来在搜索时获取文档的相关度(score)。自定义评分器。
+</p>
+<ul class="org-ul">
+<li>每个文档只能有一个全局的Similarity</li>
+<li>默认行为BM25SimilarityFactory</li>
+<li>通过&lt;similarity/&gt; 标签可以覆盖默认行为</li>
+<li>可以通过两种形式实现</li>
+<li><img src="http://static.oschina.net/uploads/space/2012/0327/191046_bwnq_100580.png" alt="191046_bwnq_100580.png" /></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-xml">&lt;<span style="color: #00ff7f;">similarity</span> <span style="color: #9acd32;">class</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">solr.BM25SimilarityFactory</span><span style="color: #ffa07a;">"</span>/&gt;
+&lt;<span style="color: #00ff7f;">similarity</span> <span style="color: #9acd32;">class</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">solr.DFRSimilarityFactory</span><span style="color: #ffa07a;">"</span>&gt;
+    &lt;<span style="color: #00ff7f;">str</span> <span style="color: #9acd32;">name</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">basicModel</span><span style="color: #ffa07a;">"</span>&gt;P&lt;/<span style="color: #00ff7f;">str</span>&gt;
+    &lt;<span style="color: #00ff7f;">str</span> <span style="color: #9acd32;">name</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">afterEffect</span><span style="color: #ffa07a;">"</span>&gt;L&lt;/<span style="color: #00ff7f;">str</span>&gt;
+    &lt;<span style="color: #00ff7f;">str</span> <span style="color: #9acd32;">name</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">normalization</span><span style="color: #ffa07a;">"</span>&gt;H2&lt;/<span style="color: #00ff7f;">str</span>&gt;
+    &lt;<span style="color: #00ff7f;">float</span> <span style="color: #9acd32;">name</span>=<span style="color: #ffa07a;">"</span><span style="color: #ffa07a;">c</span><span style="color: #ffa07a;">"</span>&gt;7&lt;/<span style="color: #00ff7f;">float</span>&gt;
+&lt;/<span style="color: #00ff7f;">similarity</span>&gt;
+</pre>
+</div>
+</div></li></ol>
+</div>
+
+
+<div id="outline-container-org093b687" class="outline-4">
+<h4 id="org093b687"><span class="section-number-4">1.2.6</span> Schema API</h4>
+<div class="outline-text-4" id="text-1-2-6">
+<p>
+提供一种通过http请求来读取和修改schema的方式
+</p>
+<ul class="org-ul">
+<li>schema修改之后只会改变后来的文档索引形式，不会改变之前的索引文档。所以必须重新索引所有的文档</li>
+<li>output format： json | xml</li>
+<li><a href="http://">http://</a>&lt;host&gt;:&lt;port&gt;/solr/&lt;collection_name&gt;/schema/</li>
+</ul>
+</div>
+<ol class="org-ol"><li><a id="org2f0f9ee"></a>API Entry Points<br  /><div class="outline-text-5" id="text-1-2-6-1">
+<ul class="org-ul">
+<li>/schema: retrieve the schema, or modify the schema to add, remove, or replace fields, dynamic fields, copy fields, or field types</li>
+<li>/schema/fields: retrieve information about all defined fields or a specific named field</li>
+<li>/schema/dynamicfields: retrieve information about all dynamic field rules or a specific named dynamic rule</li>
+<li>/schema/fieldtypes: retrieve information about all field types or a specific field type</li>
+<li>/schema/copyfields: retrieve information about copy fields</li>
+<li>/schema/name: retrieve the schema name</li>
+<li>/schema/version: retrieve the schema version</li>
+<li>/schema/uniquekey: retrieve the defined uniqueKey</li>
+<li>/schema/similarity: retrieve the global similarity definition</li>
+<li>/schema/solrqueryparser/defaultoperator: retrieve the default operator</li>
+</ul>
+</div></li>
+
+<li><a id="orgcd76db3"></a>Modify the Schema<br  /><div class="outline-text-5" id="text-1-2-6-2">
+<pre class="example">
+curl -X POST -H 'Content-type:application/json' --data-binary '{
+    "add-field":{ "name":"sell-by", "type":"tdate", "stored":true } 
+}' http://localhost:8983/solr/gettingstarted/schema
+</pre>
+</div>
+
+<ol class="org-ol"><li><a id="org5f504f1"></a>Schema Changes among Replicas<br  /><div class="outline-text-6" id="text-1-2-6-2-1">
+<p>
+在一个复制集上做的更改会改到其他的复制集上面
+</p>
+</div></li></ol></li>
+
+<li><a id="org54c1266"></a>Retrieve Schema Information<br  /><div class="outline-text-5" id="text-1-2-6-3">
+<pre class="example">
+curl http://localhost:8983/solr/gettingstarted/schema?wt=json
+curl http://localhost:8983/solr/gettingstarted/schema?wt=xml
+curl http://localhost:8983/solr/gettingstarted/schema?wt=schema.xml
+curl http://localhost:8983/solr/gettingstarted/schema/fields?wt=json[fl=string,string
+&amp;includeDynamic=bool&amp;showDefaults=bool]
+</pre>
+</div></li></ol>
+</div>
+
+
+<div id="outline-container-orgc5a0bde" class="outline-4">
+<h4 id="orgc5a0bde"><span class="section-number-4">1.2.7</span> Putting the Pieces Together</h4>
+<div class="outline-text-4" id="text-1-2-7">
+</div><ol class="org-ol"><li><a id="orge1b2e36"></a>Choosing Appropriate Numeric Types<br  /><div class="outline-text-5" id="text-1-2-7-1">
+<ol class="org-ol">
+<li>一般情况下 使用
+<ul class="org-ul">
+<li>TrieIntField</li>
+<li>TrieLongField</li>
+<li>TrieFloatField</li>
+<li>TrieDoubleFiel</li>
+<li>precisionStep="0"</li>
+</ul></li>
+<li>数字经常被指定范围
+<ul class="org-ul">
+<li>precisionStep="8"</li>
+</ul></li>
+</ol>
+</div></li>
+
+
+<li><a id="org81b92cf"></a>Working With Text<br  /><div class="outline-text-5" id="text-1-2-7-2">
+<ol class="org-ol">
+<li>通过使用一个txt field将所有字段汇总成一个搜索(用到了copyField)</li>
+<li>通过copyField将一个字段作为不同的用处</li>
+</ol>
+</div></li>
+
+
+<li><a id="orgc1069e9"></a>DocValues<br  /><div class="outline-text-5" id="text-1-2-7-3">
+<ul class="org-ul">
+<li>传统的index是一种倒排索引<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> 并且是term-to-document的list,对于使用term来搜索时，这种方式很快</li>
+<li>但是若是使用facet、sort、hightlight这些特性，就会很慢</li>
+<li>docvalues 是一种 面向列 的字段索引方式，并且使用了document-to-value的list</li>
+<li>indexed 和 docValues 只能指定一个为true</li>
+<li>只能开启以下几个类型的docValues
+<ol class="org-ol">
+<li>StrField</li>
+<li>UUIDField</li>
+<li>Trie* numeric fields</li>
+<li>date</li>
+<li>EnumField</li>
+</ol></li>
+</ul>
+</div></li>
+
+<li><a id="org56e5b3d"></a><span class="todo TODO">TODO</span> Using DocValues<br  /></li>
+
+<li><a id="orgc6cf139"></a><span class="todo TODO">TODO</span> Schemaless Mode<br  /><div class="outline-text-5" id="text-1-2-7-5">
+</div></li></ol>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+正排索引是指由文档找词，倒排索引是指由词找文档
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="author">Author: 吴丹阳</p>
+<p class="date">Created: 2017-03-07 Tue 11:42</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

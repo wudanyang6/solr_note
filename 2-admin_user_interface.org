@@ -1,0 +1,81 @@
+* 前言
+  通过 solr 提供的用户界面,
+  可以很方便地管理 solr 并且能提高开发效率。
+
+
+* 访问
+   http://hostname:port/solr
+
+
+   默认是http://localhost:8983
+
+
+* 获取帮助
+   底部链接
+   - 帮助文档
+   - issue tracker
+   - IRC 聊天室
+   - 社区论坛
+   - 查询语句的语法
+
+
+* Logging
+
+  - 黄色高亮的有记录日志的能力
+  - 黑体字部分不受root影响
+
+
+* Cloud (仅在 Cloud 模式下显示)
+** Tree
+    显示zookeeper内部数据
+
+** graph
+    显示collection的分片信息
+
+** Dump
+    获取一份ZooKeeper中的solr数据快照。（帮助调试）
+
+
+* Core Admin
+  管理 Core 
+
+
+* Thread Dump
+   监视当前活动的线程，绿色对号是RUNNABLE
+   鼠标放到名字上会有状态显示:
+  | name          | desc         |
+  | NEW           | 未启动       |
+  | RUNNABLE      | 在jvm中运行  |
+  | BLOCKED       | 阻塞         |
+  | WAITING       | 等待         |
+  | TIMED_WAITING | 有时间的等待 |
+  | TERMINATED    | 退出         |
+
+
+* Collection-Specific Tools(只有在cloud下才能看到)
+
+** Analysis
+    分析查询语句,使用 solr 内置分词时能够便于调试
+
+** Documents
+    更新数据
+
+** Files
+    configuration files | solrCloud 展示的是 ZooKeeper 中的配置文件
+    1. solrconfig.xml
+       - 定义了 solr 如何索引内容和响应请求
+    2. Schema 定义数据类型
+       - 文档字段
+      
+
+** Query
+   在 query 界面可以很方便的查询 solr 中的数据
+
+
+** Stream
+    raw版本的query界面
+
+
+** Schema
+    1. 选择字段-可以查看在 schema 中定义的字段的属性
+    2. load term info 加载示例数据

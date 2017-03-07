@@ -1,0 +1,159 @@
+#+TITLE SolrCloud
+
+* solrCloud
+  server/solr
+** features
+  1. 集中式配置管理
+  2. 自动化负载均衡和故障切换
+  3. ZooKeeper 整合
+
+
+** 相关概念
+*** Node
+    solr实例
+*** Cluster
+    可以包含多个Collection，由一个或者多个node组成
+*** Collection
+    在SolrCloud集群中逻辑意义上的完整的索引, 可以分到多个Shards上
+*** Config Set
+    Solr Core提供服务必须的一组配置文件
+*** Leader
+    赢得选举的Shard replicas
+*** Replica
+    Shard的一个拷贝
+*** Shard
+    Collection的逻辑分片。一个shard上面一个leader replica
+*** Zookeeper
+    Zookeeper提供分布式锁功能，对SolrCloud是必须的。它处理Leader选举。Solr可以以内嵌的Zookeeper运行，但是建议用独立的，并且最好有3个以上的主机。 
+
+
+** 配置外部 ZooKeeper
+   *需要多少Zookeeper* 想要挂掉F个机器时还能正常提供服务，就需要 2*F+1 台机器
+   下载地址： http://zookeeper.apache.org/releases.html
+*** 一个实例
+   - <ZOOKEEPER_HOME>/conf/zoo.cfg
+   #+BEGIN_SRC   
+   # 一个滴答（时间单位， 毫秒）
+   tickTime=2000 
+   # 数据文件夹
+   dataDir=/var/lib/zookeeper
+   # 端口号
+   clientPort=2181 
+   #+END_SRC
+
+
+*** 集群
+**** 配置文件
+    - zoo.cfg
+      #+BEGIN_SRC 
+      dataDir=/var/lib/zookeeperdata/1
+      clientPort=2181
+      # 初始化连接最大忍受的滴答次数
+      initLimit=5
+      # leader 与 follower 发送消息最大的等待时间
+      syncLimit=2
+      # server.{第几号服务器}={ip地址}:{服务器与leader交换信息的端口}:{leader服务器挂掉之后，选举信息通信的端口}
+      server.1=localhost:2888:3888
+      server.2=localhost:2889:3889
+      server.3=localhost:2890:3890
+      #+END_SRC
+
+    - zoo2.cfg
+      #+BEGIN_SRC 
+      tickTime=2000
+      dataDir=~/self/zoo/zoodata/2
+      clientPort=2182
+      initLimit=5
+      syncLimit=2
+      server.1=localhost:2888:3888
+      server.2=localhost:2889:3889
+      server.3=localhost:2890:3890
+      #+END_SRC
+
+    - zoo3.cfg
+      #+BEGIN_SRC sh
+      tickTime=2000
+      dataDir=~/self/zoo/zoodata/3
+      clientPort=2183
+      initLimit=5
+      syncLimit=2
+      server.1=localhost:2888:3888
+      server.2=localhost:2889:3889
+      server.3=localhost:2890:3890
+      #+END_SRC
+
+    - myid file
+      #+BEGIN_SRC sh
+      mkdir -p zoodata/{1,2,3}
+      echo 1 > 1/myid
+      echo 2 > 2/myid
+      echo 3 > 3/myid
+      #+END_SRC
+
+    -  启动三个zookeeper
+    cd <ZOOKEEPER_HOME>
+    bin/zkServer.sh start zoo.cfg
+    bin/zkServer.sh start zoo2.cfg
+    bin/zkServer.sh start zoo3.cfg
+    - 引用外部zookeeper
+    bin/solr start -e cloud -z localhost:2181,localhost:2182,localhost:2183 -noprompt
+    #+BEGIN_SRC 
+    ➜  zoo bin/zkServer.sh status zoo.cfg
+    ZooKeeper JMX enabled by default
+    Using config: /Users/wudanyang/self/zoo/bin/../conf/zoo.cfg
+    Mode: follower
+    ➜  zoo bin/zkServer.sh status zoo2.cfg
+    ZooKeeper JMX enabled by default
+    Using config: /Users/wudanyang/self/zoo/bin/../conf/zoo2.cfg
+    Mode: leader
+    ➜  zoo bin/zkServer.sh status zoo3.cfg
+    ZooKeeper JMX enabled by default
+    Using config: /Users/wudanyang/self/zoo/bin/../conf/zoo3.cfg
+    Mode: follower
+    #+END_SRC
+
+
+
+*** 通过zookeeper管理配置文件
+    上传配置文件
+    sh zkcli.sh -cmd upconfig -zkhost <host:port> -confname <name for configset> -solrhome <solrhome> -confdir <path to directory with configset>
+    cd /Users/wudanyang/self/solr/server/scripts/cloud-scripts
+    sh zkcli.sh -cmd upconfig -zkhost localhost:2181 -confname yang -confdir ../../../server/solr/configsets/basic_configs/conf
+
+
+*** 添加 node
+   - zkServer.sh start *.cfg
+   - bin/solr start -cloud -s <conf path> -p 8987 -z localhost:2181 # 添加一个节点,配置文件夹中必须包含一个solr.xml文件
+   - bin/solr start -cloud -s confs/cloud/conf/ -p 8984 -z localhost:2181,localhost:2182,localhost:2183
+   - zkServer.sh stop
+
+    
+*** Collections API
+    创建多个shard需要多个node
+    nodeNum = shardNum * replicationFactorNum
+    - http://localhost:8983/solr/admin/collections?action=CREATE&name=yang&numShards=1&replicationFactor=3&collection.configName=yang
+    - http://localhost:8983/solr/admin/collections?action=RELOAD&name=yang_test2
+
+
+** Run Examples
+*** 通过 bin/solr restart 可以重启节点
+    bin/solr restart -c -p 8983 -s example/cloud/node1/solr
+    -c 启动solrcloud模式
+    -p 指定端口
+    -h 指定host
+    bin/solr restart -c -p 7574 -z localhost:9983 -s example/cloud/node2/solr
+    -z zookeeper服务器地址
+*** 向集群中添加一个节点
+    mkdir <solr.home for new solr node>
+    cp <existing solr.xml path> <new solr.home>
+    bin/solr start -cloud -s solr.home/solr -p <port num> -z <zk hosts string>
+    bin/solr start -cloud -s <conf path> -p 8987 -z localhost:2181 # 添加一个节点,配置文件夹中必须包含一个solr.xml文件
+
+    也可以通过以下命令,将solr.xml上传到zookeeper，这样就不用总是复制solr.xml到新的节点
+    zkcli.sh -zkhost localhost:2181 -cmd putfile /solr.xml /path/to/solr.xml
+
+**** example
+     mkdir -p example/cloud/node3/solr
+     cp server/solr/solr.xml example/cloud/node3/solr
+     第一次以cloud模式启动时会启动一个zookeeper服务器端口号是cloud端口号加上1000
+     bin/solr start -cloud -s example/cloud/node3/solr -p 8987 -z localhost:9983

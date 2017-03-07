@@ -1,0 +1,263 @@
+#+OPTIONS: ^:nil
+
+* Documents, Fields, and Schema Design
+
+** Overview
+*** 原理简介
+   - feed in (indexing or updating)
+   - ask questions (query)
+*** Field Analysis
+    告诉solr如何处理字段，如需要忽略的字段与转换形式（a,the,an,Running=>run）
+*** Schema File
+  告诉solr如何对输入的文档简历索引
+- 默认为*managed-schema*文件
+- Cloud模式没有此文件，只能通过api或者cloud-ui看到
+- api方式修改只能修改*managed schema*指定的文件
+- solrCloud不通过api方式修改schema只能通过 upconfig 和 downconfg 让ZooKeeper管理配置文件
+
+
+** Schema Detail
+   server/
+*** Solr Field Types
+**** TODO Field Type Definitions and Properties（完善属性定义） 
+1. 字段类型定义可以包含四种类型
+   - name 必须
+   - class 必须
+   - 如果字段类型是TextField，可以加上对field analysis
+   - 字段类型的属性，取决于class
+2. 类型定义
+   - 放在fieldType标签中
+   - 可以用type标签分组
+3. Field Type Properties
+   - <fieldType name="date" class="solr.TrieDateField" sortMissingLast="true" omitNorms="true"/>
+   - 属性被分成三种
+     1) 针对field type的class的属性
+     2) 常规属性
+        - name
+        - class
+        - positionIncrementGap (对multivalue field 处理时，给两个field的词人为加上distance)
+        - autoGeneratePhraseQueries
+        - docValuesFormat (docValues的格式)
+        - postingsFormat
+     3) 字段默认属性（替换继承的默认属性）
+        - indexed (是否建立索引)
+        - stored (是否存储内容)
+        - docValues ( 可以提升如排序,分面,高亮的性能)
+        - sortMissingFirst/sortMissingLast
+        - multiValued (多值)
+4. 例子:
+#+BEGIN_SRC xml
+  <fieldType name="ancestor_path" class="solr.TextField">
+    <analyzer type="index">
+      <tokenizer class="solr.KeywordTokenizerFactory"/>
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="/"/>
+    </analyzer>
+  </fieldType>
+#+END_SRC
+
+**** TODO Field Types Included with Solr 
+**** TODO Working with Currencies and Exchange Rates 
+**** FEEDBACK Working with Dates
+***** 时间格式
+     YYYY-MM-DDThh:mm:ssZ
+     - Z 表示日期为 UTC
+     - 没有时区
+     - 只能精确到毫秒
+     - 1972-05-20T17:33:18Z 日期和年份中间必须要有 - 分割
+     - 冒号有时需要转义，下面十几个正确的表达式：
+        datefield:1972-05-20T17\:33\:18.772Z
+
+        datefield:"1972-05-20T17:33:18.772Z"
+
+        datefield:[1972-05-20T17:33:18.772 TO *]
+****** 时间范围的格式
+     - 2000-11
+       十一月
+     - 2000-11T13
+       与上个大致相同，但是表示的是 13 点这一个小时
+     - -0009
+       公元前 10 年，公元 0 年代表公元前 1 年
+     - [2000-11-01 TO 2014-12-01]
+       日期粒度的时间间隔
+     - [2014 TO 2014-12-01]
+       从 2014 年开始的一天到 12 月 01 日
+     - [* TO 2014-12-01]
+       从最早的时间到指定时间
+     - 限制：
+       范围语法不支持数学运算
+***** 时间运算
+      1. 对现有时间的加减运算
+         - NOW+2MONTHS 从现在开始的两个月
+         - NOW-1DAY 昨天
+      2. 对现有时间指定单位的舍入
+         - NOW/HOUR 对现在时间舍入，取当前小时的开始那一个时间点
+         - NOW+6MONTHS+3DAYS/DAY 取 6 个月 3 天之后的那天的最开始
+**** TODO Working with Enum Fields 
+**** TODO Working with External Files and Processes
+
+
+*** Defining Fields
+**** example
+- <field name="price" type="float" default="0.0" indexed="true" stored="true"/>
+
+**** Field Properties
+- name (must)
+- type (must)
+- default (optional)
+
+**** TODO Optional Field Type Override Properties
+    会覆盖掉 fieldType 属性的属性
+
+
+*** Copying Fields
+- 为一个数据应用多种不同的字段类型
+- 需要搜索多个字段, 可以通过*copyField*组成一个字段，然后配置成默认搜索此字段。
+- 使用*copyField*会造成索引数据的增长
+- source和dest开头或者结尾可以有*表示匹配所有(表示通配符)
+**** 主要字段
+- source 被复制的字段名称
+- dest 复制到的名称
+- maxChars 限制从source最多复制的字符 (想要控制index大小时有用)
+
+**** example
+#+BEGIN_SRC xml
+<copyField source="cat" dest="text" maxChars="30000" />
+<copyField source="*_t" dest="text" maxChars="25000" />
+#+END_SRC
+如果text中有数据，那么cat中的内容将会添加到text中。
+
+如果dest的source是多个值组成的，或者dest有多个source需要把dest字段设置成multivalued="true"
+#+BEGIN_SRC xml
+<schema name="eshequn.post.db_post.0" version="1.1" xmlns:xi="http://www.w3.org/2001/XInclude">  
+  <fields>  
+    <field name="title" type="text" indexed="true" stored="false" />  
+    <field name="content" type="text" indexed="true" stored="false" />  
+    <field name="tc" type="text" indexed="true" stored="false" multiValued="true"/>  
+  </fields>  
+  <copyField source="title" dest="tc" />  
+  <copyField source="content" dest="tc" />  
+<
+/schema>
+#+END_SRC
+
+
+*** Dynamic Fields
+   顾名思义，动态字段。
+#+BEGIN_SRC xml
+<dynamicField name="*_i" type="int" indexed="true" stored="true"/>
+#+END_SRC
+
+
+*** Other Elements
+
+**** Unique Key
+      指定文档的唯一标志(更新文档的时候有用)
+**** Default Search Field & Query Operator
+- <defaultSearchField/> 已经被df参数取代
+- <solrQueryParserdefaultOperator="OR"/> 被q.op取代
+**** Similarity
+      用来在搜索时获取文档的相关度(score)。自定义评分器。
+- 每个文档只能有一个全局的Similarity
+- 默认行为BM25SimilarityFactory
+- 通过<similarity/> 标签可以覆盖默认行为
+- 可以通过两种形式实现
+- [[http://static.oschina.net/uploads/space/2012/0327/191046_bwnq_100580.png]]
+#+BEGIN_SRC xml
+<similarity class="solr.BM25SimilarityFactory"/>
+<similarity class="solr.DFRSimilarityFactory">
+    <str name="basicModel">P</str>
+    <str name="afterEffect">L</str>
+    <str name="normalization">H2</str>
+    <float name="c">7</float>
+</similarity>
+#+END_SRC
+
+
+*** Schema API
+      提供一种通过http请求来读取和修改schema的方式
+      - schema修改之后只会改变后来的文档索引形式，不会改变之前的索引文档。所以必须重新索引所有的文档
+      - output format： json | xml
+      - http://<host>:<port>/solr/<collection_name>/schema/
+**** API Entry Points
+- /schema: retrieve the schema, or modify the schema to add, remove, or replace fields, dynamic fields, copy fields, or field types 
+- /schema/fields: retrieve information about all defined fields or a specific named field 
+- /schema/dynamicfields: retrieve information about all dynamic field rules or a specific named dynamic rule 
+- /schema/fieldtypes: retrieve information about all field types or a specific field type 
+- /schema/copyfields: retrieve information about copy fields 
+- /schema/name: retrieve the schema name 
+- /schema/version: retrieve the schema version 
+- /schema/uniquekey: retrieve the defined uniqueKey 
+- /schema/similarity: retrieve the global similarity definition 
+- /schema/solrqueryparser/defaultoperator: retrieve the default operator
+
+**** Modify the Schema
+#+BEGIN_SRC
+curl -X POST -H 'Content-type:application/json' --data-binary '{
+    "add-field":{ "name":"sell-by", "type":"tdate", "stored":true } 
+}' http://localhost:8983/solr/gettingstarted/schema
+#+END_SRC
+
+***** Schema Changes among Replicas
+     在一个复制集上做的更改会改到其他的复制集上面
+
+**** Retrieve Schema Information
+#+BEGIN_SRC 
+curl http://localhost:8983/solr/gettingstarted/schema?wt=json
+curl http://localhost:8983/solr/gettingstarted/schema?wt=xml
+curl http://localhost:8983/solr/gettingstarted/schema?wt=schema.xml
+curl http://localhost:8983/solr/gettingstarted/schema/fields?wt=json[fl=string,string
+&includeDynamic=bool&showDefaults=bool]
+#+END_SRC
+
+
+*** Putting the Pieces Together
+
+**** Choosing Appropriate Numeric Types
+1. 一般情况下 使用
+   - TrieIntField
+   - TrieLongField
+   - TrieFloatField
+   - TrieDoubleFiel
+   - precisionStep="0"
+2. 数字经常被指定范围
+   - precisionStep="8"
+
+
+**** Working With Text
+
+1. 通过使用一个txt field将所有字段汇总成一个搜索(用到了copyField)
+2. 通过copyField将一个字段作为不同的用处
+
+
+**** DocValues
+- 传统的index是一种倒排索引[fn:index_style] 并且是term-to-document的list,对于使用term来搜索时，这种方式很快
+- 但是若是使用facet、sort、hightlight这些特性，就会很慢
+- docvalues 是一种 面向列 的字段索引方式，并且使用了document-to-value的list
+- indexed 和 docValues 只能指定一个为true
+- 只能开启以下几个类型的docValues
+  1. StrField
+  2. UUIDField
+  3. Trie* numeric fields
+  4. date
+  5. EnumField
+
+**** TODO Using DocValues
+
+**** TODO Schemaless Mode
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[fn:index_style] 正排索引是指由文档找词，倒排索引是指由词找文档

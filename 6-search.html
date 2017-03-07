@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2017-03-07 Tue 11:42 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title></title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="吴丹阳" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgd203043">1. Search</a>
+<ul>
+<li><a href="#org2ca2219">1.1. Overview</a>
+<ul>
+<li><a href="#org40cd325">1.1.1. 输入查询语句</a></li>
+<li><a href="#org0c8eecf">1.1.2. 查询语句被 <b>request handler</b> 处理 (此插件定义了solr处理请求的逻辑)</a></li>
+<li><a href="#org338b0e6">1.1.3. 调用 <b>query parser</b> (解析器解释查询的条件和参数)</a></li>
+<li><a href="#orgff8ee11">1.1.4. *filter query*(fq) (filter query 会开辟一块单独的缓存，这种策略对性能提升很大)</a></li>
+<li><a href="#org427cac1">1.1.5. 指定特定的条件高亮</a></li>
+<li><a href="#orgf6709b7">1.1.6. 返回结果可以有一个小片段，像是谷歌的搜索</a></li>
+<li><a href="#org455b588">1.1.7. 对结果分组</a></li>
+<li><a href="#orgcd66c55">1.1.8. MoreLikeThis</a></li>
+<li><a href="#orgc66e1e9">1.1.9. response writer (返回结果的形式)</a></li>
+</ul>
+</li>
+<li><a href="#orgbc7e653">1.2. 通用查询语句</a>
+<ul>
+<li><a href="#org7bfccc5">1.2.1. defType:</a></li>
+<li><a href="#org08b0e8d">1.2.2. sort:</a></li>
+<li><a href="#org2c27bbe">1.2.3. start:</a></li>
+<li><a href="#org7a16809">1.2.4. rows:</a></li>
+<li><a href="#org21fab1b">1.2.5. fq:</a></li>
+<li><a href="#org40ca9d1">1.2.6. fl:</a></li>
+<li><a href="#orga9536d6">1.2.7. debug:</a></li>
+<li><a href="#orge9434cd">1.2.8. explainOther:</a></li>
+<li><a href="#org96afc27">1.2.9. timeAllowed：</a></li>
+<li><a href="#org12a3969">1.2.10. omitHeader:</a></li>
+<li><a href="#org9e823ae">1.2.11. wt:</a></li>
+<li><a href="#org7e92dfd">1.2.12. cache=false:</a></li>
+<li><a href="#org530f4f1">1.2.13. logParamsList(version &gt;= 4.7):</a></li>
+<li><a href="#org6f5652a">1.2.14. echoParams:</a></li>
+</ul>
+</li>
+<li><a href="#org9044a46">1.3. The Standard Query Parser (lucene parser)</a>
+<ul>
+<li><a href="#org7001834">1.3.1. q</a></li>
+<li><a href="#org3e5f6f3">1.3.2. q.op</a></li>
+<li><a href="#orgd8808b9">1.3.3. df</a></li>
+</ul>
+</li>
+<li><a href="#orge944d19">1.4. <span class="todo TODO">TODO</span> The DisMax Query Parser</a>
+<ul>
+<li><a href="#orgafe83cf">1.4.1. Parameters</a></li>
+</ul>
+</li>
+<li><a href="#org5ef0f7c">1.5. Faceting</a>
+<ul>
+<li><a href="#org715edd4">1.5.1. General Parameters</a></li>
+<li><a href="#org75436f2">1.5.2. Field-Value Faceting Parameters</a></li>
+<li><a href="#orgef2c62f">1.5.3. facet.pivot</a></li>
+</ul>
+</li>
+<li><a href="#orgdb9e240">1.6. Highlighter</a>
+<ul>
+<li><a href="#orgda6c045">1.6.1. Standard Highlighter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+#+TITLE Solr 查询
+</p>
+
+<div id="outline-container-orgd203043" class="outline-2">
+<h2 id="orgd203043"><span class="section-number-2">1</span> Search</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-org2ca2219" class="outline-3">
+<h3 id="org2ca2219"><span class="section-number-3">1.1</span> Overview</h3>
+<div class="outline-text-3" id="text-1-1">
+</div><div id="outline-container-org40cd325" class="outline-4">
+<h4 id="org40cd325"><span class="section-number-4">1.1.1</span> 输入查询语句</h4>
+</div>
+<div id="outline-container-org0c8eecf" class="outline-4">
+<h4 id="org0c8eecf"><span class="section-number-4">1.1.2</span> 查询语句被 <b>request handler</b> 处理 (此插件定义了solr处理请求的逻辑)</h4>
+</div>
+<div id="outline-container-org338b0e6" class="outline-4">
+<h4 id="org338b0e6"><span class="section-number-4">1.1.3</span> 调用 <b>query parser</b> (解析器解释查询的条件和参数)</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<ol class="org-ol">
+<li>解析器的种类
+<ol class="org-ol">
+<li>Standard Query Parser (清晰)</li>
+<li>DisMax (很少报错)</li>
+<li>eDisMax (扩展版的DisMax，完全支持 lucene 查询语法)</li>
+</ol></li>
+<li>common query parameters  (支持全部的解析器)</li>
+<li>解析器输入种类
+<ol class="org-ol">
+<li>查询语句</li>
+<li>对查询语句的微调参数</li>
+<li>对查询结果展示的控制</li>
+</ol></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgff8ee11" class="outline-4">
+<h4 id="orgff8ee11"><span class="section-number-4">1.1.4</span> *filter query*(fq) (filter query 会开辟一块单独的缓存，这种策略对性能提升很大)</h4>
+<div class="outline-text-4" id="text-1-1-4">
+<ol class="org-ol">
+<li>Filter queries 只查询索引中存在的数据</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org427cac1" class="outline-4">
+<h4 id="org427cac1"><span class="section-number-4">1.1.5</span> 指定特定的条件高亮</h4>
+</div>
+<div id="outline-container-orgf6709b7" class="outline-4">
+<h4 id="orgf6709b7"><span class="section-number-4">1.1.6</span> 返回结果可以有一个小片段，像是谷歌的搜索</h4>
+</div>
+<div id="outline-container-org455b588" class="outline-4">
+<h4 id="org455b588"><span class="section-number-4">1.1.7</span> 对结果分组</h4>
+<div class="outline-text-4" id="text-1-1-7">
+<ol class="org-ol">
+<li>faceting
+<ol class="org-ol">
+<li>facet 分组字段（对结果进行分组）</li>
+<li>facet count 分组得到的结果的数量</li>
+<li>constraints 分组得到的结果的值</li>
+<li>breadcrumb 面包屑（已经应用的facet）</li>
+<li>list 结果详情</li>
+</ol></li>
+<li>clustering</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgcd66c55" class="outline-4">
+<h4 id="orgcd66c55"><span class="section-number-4">1.1.8</span> MoreLikeThis</h4>
+</div>
+<div id="outline-container-orgc66e1e9" class="outline-4">
+<h4 id="orgc66e1e9"><span class="section-number-4">1.1.9</span> response writer (返回结果的形式)</h4>
+<div class="outline-text-4" id="text-1-1-9">
+<ol class="org-ol">
+<li>XML Response Writer</li>
+<li>JSON Response Writer</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgbc7e653" class="outline-3">
+<h3 id="orgbc7e653"><span class="section-number-3">1.2</span> 通用查询语句</h3>
+<div class="outline-text-3" id="text-1-2">
+</div><div id="outline-container-org7bfccc5" class="outline-4">
+<h4 id="org7bfccc5"><span class="section-number-4">1.2.1</span> defType:</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<ol class="org-ol">
+<li>选择查询解析器</li>
+<li>dismax/lucene</li>
+<li>defType=dismax</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org08b0e8d" class="outline-4">
+<h4 id="org08b0e8d"><span class="section-number-4">1.2.2</span> sort:</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<ol class="org-ol">
+<li>对返回结果排序，asc|desc</li>
+<li>可以对数字和字母排序</li>
+<li>排序规则
+<ol class="org-ol">
+<li>根据文档相关程度排序</li>
+<li>或者是根据字段的值排序，这个字段的值要么被索引要么使用了*DocValues*</li>
+</ol></li>
+<li>单独字段排序：&lt;field_name&gt;+(asc|desc)</li>
+<li>多字段排序：sort=&lt;field name&gt;+&lt;direction&gt;,&lt;field name&gt;+&lt;direction&gt;],&#x2026;</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org2c27bbe" class="outline-4">
+<h4 id="org2c27bbe"><span class="section-number-4">1.2.3</span> start:</h4>
+<div class="outline-text-4" id="text-1-2-3">
+<ul class="org-ul">
+<li>初始位置</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7a16809" class="outline-4">
+<h4 id="org7a16809"><span class="section-number-4">1.2.4</span> rows:</h4>
+<div class="outline-text-4" id="text-1-2-4">
+<ul class="org-ul">
+<li>相当于mysql中的limit</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org21fab1b" class="outline-4">
+<h4 id="org21fab1b"><span class="section-number-4">1.2.5</span> fq:</h4>
+<div class="outline-text-4" id="text-1-2-5">
+<ol class="org-ol">
+<li>对结果过滤的条件</li>
+<li>对将要返回的文档过滤（不会影响score【猜测是相关度】）</li>
+<li>对复杂的query进行加速，因为会对fq进行的查询独立进行缓存</li>
+<li>fq参数可以出现多次
+<ol class="org-ol">
+<li>`fq=popularity:[10 TO *]&amp;fq=section:0` （当条件经常单独出现时）</li>
+<li>`fq=+popularity:[10 TO *] +section:0` (当条件经常单独出现时)</li>
+</ol></li>
+<li>url-encoding 参考地址 ：  <a href="http://meyerweb.com/eric/tools/dencoder/">http://meyerweb.com/eric/tools/dencoder/</a></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org40ca9d1" class="outline-4">
+<h4 id="org40ca9d1"><span class="section-number-4">1.2.6</span> fl:</h4>
+<div class="outline-text-4" id="text-1-2-6">
+<ol class="org-ol">
+<li>设定返回结果的字段,用逗号或者空格分开</li>
+<li>stored="true" or docValues="true" or useDocValuesAsStored="true"(在docvalues模式开启时是默认的)</li>
+<li>字段可以是个函数 如：fl=id,title,product(price,popularity)</li>
+<li>别名：fl=id,sales_price:price,secret_sauce:prod(price,popularity),why_score:[explain style=nl]</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orga9536d6" class="outline-4">
+<h4 id="orga9536d6"><span class="section-number-4">1.2.7</span> debug:</h4>
+<div class="outline-text-4" id="text-1-2-7">
+<ol class="org-ol">
+<li>返回额外的调试信息。</li>
+<li>debug=timing只返回时间信息.</li>
+<li>debug=results返回对返回结果的每个文档的解释。</li>
+<li>debug=all(true)将返回所有的调试信息。debugQuery=true</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orge9434cd" class="outline-4">
+<h4 id="orge9434cd"><span class="section-number-4">1.2.8</span> explainOther:</h4>
+<div class="outline-text-4" id="text-1-2-8">
+<ul class="org-ul">
+<li>q=supervillians&amp;debugQuery=on&amp;explainOther=id\:juggernaut</li>
+<li>返回调试信息</li>
+<li>必须加上debugQuery=on否则不返回debug字段</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org96afc27" class="outline-4">
+<h4 id="org96afc27"><span class="section-number-4">1.2.9</span> timeAllowed：</h4>
+<div class="outline-text-4" id="text-1-2-9">
+<ul class="org-ul">
+<li>超过此时间之后，只会返回一部分数据</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org12a3969" class="outline-4">
+<h4 id="org12a3969"><span class="section-number-4">1.2.10</span> omitHeader:</h4>
+<div class="outline-text-4" id="text-1-2-10">
+<ul class="org-ul">
+<li>不返回头部信息</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org9e823ae" class="outline-4">
+<h4 id="org9e823ae"><span class="section-number-4">1.2.11</span> wt:</h4>
+<div class="outline-text-4" id="text-1-2-11">
+<ul class="org-ul">
+<li>返回结果的格式</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7e92dfd" class="outline-4">
+<h4 id="org7e92dfd"><span class="section-number-4">1.2.12</span> cache=false:</h4>
+<div class="outline-text-4" id="text-1-2-12">
+<ul class="org-ul">
+<li>停止缓存所有的查询和过滤条件的结果</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org530f4f1" class="outline-4">
+<h4 id="org530f4f1"><span class="section-number-4">1.2.13</span> logParamsList(version &gt;= 4.7):</h4>
+<div class="outline-text-4" id="text-1-2-13">
+<ul class="org-ul">
+<li>默认会记录所有的字段，logParamsList=param1,param2逗号分割的参数</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6f5652a" class="outline-4">
+<h4 id="org6f5652a"><span class="section-number-4">1.2.14</span> echoParams:</h4>
+<div class="outline-text-4" id="text-1-2-14">
+<p>
+在response header 中的 params 字段中显示所用到的查询字段
+</p>
+<ol class="org-ol">
+<li>explicit(默认)</li>
+<li>all</li>
+<li>none</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org9044a46" class="outline-3">
+<h3 id="org9044a46"><span class="section-number-3">1.3</span> The Standard Query Parser (lucene parser)</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+优点：直观，缺点：不能有语法错误
+</p>
+</div>
+<div id="outline-container-org7001834" class="outline-4">
+<h4 id="org7001834"><span class="section-number-4">1.3.1</span> q</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<p>
+查询语句，强制性
+</p>
+<pre class="example">
+http://localhost:8983/solr/techproducts/select?q=id:SP2514N
+q=*:* 查询全部,特殊情况
+</pre>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">?</td>
+<td class="org-left">匹配单个字符</td>
+</tr>
+
+<tr>
+<td class="org-left">*</td>
+<td class="org-left">匹配多个字符</td>
+</tr>
+
+<tr>
+<td class="org-left">~</td>
+<td class="org-left">模糊搜索 roam~ 将会匹配foam，foams等</td>
+</tr>
+
+<tr>
+<td class="org-left">~1</td>
+<td class="org-left">模糊搜索 roam~ 将会匹配foam，不会匹配foams，因为foams改动了两个字</td>
+</tr>
+
+<tr>
+<td class="org-left">"jakarta apache"~10</td>
+<td class="org-left">两个词之间改动10个位置可以匹配到</td>
+</tr>
+
+<tr>
+<td class="org-left">mod_date:[20020101 TO 20030101]</td>
+<td class="org-left">范围查询</td>
+</tr>
+
+<tr>
+<td class="org-left">title:{Aida TO Smith}</td>
+<td class="org-left">大括号表示不包含上下边界</td>
+</tr>
+
+<tr>
+<td class="org-left">jakarta^4 apache</td>
+<td class="org-left">boost factor 可以通过改变这个值改变查询时的相关度,可以小于1</td>
+</tr>
+
+<tr>
+<td class="org-left">(description:blue OR color:blue)^=1.0 text:shoes</td>
+<td class="org-left">将匹配括号中的语句的文档相关度设置成1</td>
+</tr>
+
+<tr>
+<td class="org-left">title:"The Right Way" AND text:go</td>
+<td class="org-left">指定字段查询</td>
+</tr>
+
+<tr>
+<td class="org-left">title:"Do it right" AND go</td>
+<td class="org-left">第二个字段直接查询默认搜索字段</td>
+</tr>
+
+<tr>
+<td class="org-left">(AND/&amp;&amp;),(OR/ll),(+),(-),(NOT !)</td>
+<td class="org-left">操作符</td>
+</tr>
+
+<tr>
+<td class="org-left">+ - &amp;&amp; ll ! ( ) { } [ ] ^ " ~ * ? : /</td>
+<td class="org-left">需要转义的字符</td>
+</tr>
+
+<tr>
+<td class="org-left">(jakarta OR apache) AND website</td>
+<td class="org-left">表达式 website存在并且有jakarta或者apache</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-org3e5f6f3" class="outline-4">
+<h4 id="org3e5f6f3"><span class="section-number-4">1.3.2</span> q.op</h4>
+<div class="outline-text-4" id="text-1-3-2">
+<p>
+指定查询语句默认是用*AND*还是*OR*
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgd8808b9" class="outline-4">
+<h4 id="orgd8808b9"><span class="section-number-4">1.3.3</span> df</h4>
+<div class="outline-text-4" id="text-1-3-3">
+<p>
+指定默认搜索的字段
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orge944d19" class="outline-3">
+<h3 id="orge944d19"><span class="section-number-3">1.4</span> <span class="todo TODO">TODO</span> The DisMax Query Parser</h3>
+<div class="outline-text-3" id="text-1-4">
+</div><div id="outline-container-orgafe83cf" class="outline-4">
+<h4 id="orgafe83cf"><span class="section-number-4">1.4.1</span> Parameters</h4>
+</div>
+</div>
+
+
+<div id="outline-container-org5ef0f7c" class="outline-3">
+<h3 id="org5ef0f7c"><span class="section-number-3">1.5</span> Faceting</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+对结果进行分类(分组),很方便查询每个条件有多少文档。
+必要条件：facet的字段必须被索引indexed=true
+</p>
+</div>
+<div id="outline-container-org715edd4" class="outline-4">
+<h4 id="org715edd4"><span class="section-number-4">1.5.1</span> General Parameters</h4>
+<div class="outline-text-4" id="text-1-5-1">
+<ol class="org-ol">
+<li>facet=true(on) ,  默认为假
+<ol class="org-ol">
+<li>不会改变结果字段，只会添加一个 facet_counts 字段</li>
+</ol></li>
+<li>facet.query 指定计算count的表达式
+facet.query={!myfunc}name~fred</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org75436f2" class="outline-4">
+<h4 id="org75436f2"><span class="section-number-4">1.5.2</span> Field-Value Faceting Parameters</h4>
+<div class="outline-text-4" id="text-1-5-2">
+<ol class="org-ol">
+<li>facet.field  
+分组的字段</li>
+<li>facet.prefix 
+限制facet.field 的前缀，不同则不分类</li>
+<li>facet.limit  
+facet_counts 字段返回条数, 默认100</li>
+<li>facet.sort
+<ul class="org-ul">
+<li>count 根据数量排序</li>
+<li>index (default)</li>
+</ul></li>
+<li>facet.offset 
+开始条数,偏移量,它与facet.limit配合使用可以达到分页的效果</li>
+<li>facet.mincount 
+facet_counts 字段中最小的数量，低于此值不显示</li>
+<li>facet.missing 
+是否返回没有值的field</li>
+<li>facet.method 
+取值为enum或fc,默认为fc, fc表示Field Cache
+<ul class="org-ul">
+<li>enum 适用于值较少的</li>
+</ul></li>
+</ol>
+</div>
+</div>
+
+
+<div id="outline-container-orgef2c62f" class="outline-4">
+<h4 id="orgef2c62f"><span class="section-number-4">1.5.3</span> facet.pivot</h4>
+<div class="outline-text-4" id="text-1-5-3">
+<p>
+不会翻译， 作用比较像是 mysql 中将两个字段进行分组,然后rollup,获得一个统计数据
+返回字段 facet_count.facet_pivot
+</p>
+<ul class="org-ul">
+<li><a href="http://localhost:8983/solr/techproducts/select?q=*:*&amp;facet.pivot=cat,popularity,inStock&amp;facet.pivot=popularity,cat&amp;facet=true&amp;facet.field=cat&amp;facet.limit=5&amp;rows=0&amp;wt=json&amp;indent=true&amp;facet.pivot.mincount=2">http://localhost:8983/solr/techproducts/select?q=*:*&amp;facet.pivot=cat,popularity,inStock&amp;facet.pivot=popularity,cat&amp;facet=true&amp;facet.field=cat&amp;facet.limit=5&amp;rows=0&amp;wt=json&amp;indent=true&amp;facet.pivot.mincount=2</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgdb9e240" class="outline-3">
+<h3 id="orgdb9e240"><span class="section-number-3">1.6</span> Highlighter</h3>
+<div class="outline-text-3" id="text-1-6">
+</div><div id="outline-container-orgda6c045" class="outline-4">
+<h4 id="orgda6c045"><span class="section-number-4">1.6.1</span> Standard Highlighter</h4>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: 吴丹阳</p>
+<p class="date">Created: 2017-03-07 Tue 11:42</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
