@@ -147,7 +147,41 @@
      - '+'/'-' 视为强制和禁止
      - 不支持通配符
 **** q.alt
-     - q 参数为空或者没有指定时.
+     - q 参数为空或者没有指定时.执行 standard 查询
+**** qf
+     qf 是个字段列表，每个字段都有一个增强因子，能在查询中增加或者减少字段的重要性
+     #+BEGIN_SRC
+     one is 2.3, two is default, three is 0.4
+     qf="fieldOne^2.3 fieldTwo fieldThree^0.4"
+     #+END_SRC
+**** mm (Minimum Should Match)
+     - 正数
+       必须有多少符合的搜索条件 (在 optional 的条件中查询)
+      #+BEGIN_SRC
+          eg):
+
+          性别：女  MUST
+          年龄：<25  SHOULD
+          胸围: >C should
+          收入: >10000 should
+
+          要符合两个条件才会被 hit，要不直接去掉
+
+      #+END_SRC
+
+     - 负数
+       必须有 (可选条件总数-此值) 个条件匹配
+
+     - 90%
+       可选条件总数的90% 下取整
+
+     - -25%
+       表示可以缺少的条件 下取整
+
+     - 3<90%
+       若是1-3个可选，那么这3个是必须的，否则要总数的90%就可以
+
+
 ** Faceting
    对结果进行分类(分组),很方便查询每个条件有多少文档。
    必要条件：facet的字段必须被索引indexed=true
