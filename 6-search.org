@@ -126,6 +126,8 @@
     | + - && ll ! ( ) { } [ ] ^ " ~ * ? : /            | 需要转义的字符                                                    |
     | (jakarta OR apache) AND website                  | 表达式 website存在并且有jakarta或者apache                         |
 
+**** 需要转义的字符
+      + - && || ! ( ) { } [ ] ^ " ~ * ? : /
 
 *** q.op
     指定查询语句默认是用*AND*还是*OR*
@@ -136,10 +138,16 @@
 
 
 ** TODO The DisMax Query Parser
+
+   dismax: maximum disjunction
+   目的是为了容易使用和接收大部分的参数并且不返回参数
    
 *** Parameters
-
-
+**** q
+     - '+'/'-' 视为强制和禁止
+     - 不支持通配符
+**** q.alt
+     - q 参数为空或者没有指定时.
 ** Faceting
    对结果进行分类(分组),很方便查询每个条件有多少文档。
    必要条件：facet的字段必须被索引indexed=true
