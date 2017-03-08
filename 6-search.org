@@ -147,14 +147,15 @@
      - '+'/'-' 视为强制和禁止
      - 不支持通配符
 **** q.alt
-     - q 参数为空或者没有指定时.执行 standard 查询
+     - q 参数为空或者没有指定时.执行 standard 查询,通常设置q.alt为*:*
 **** qf
      qf 是个字段列表，每个字段都有一个增强因子，能在查询中增加或者减少字段的重要性
      #+BEGIN_SRC
      one is 2.3, two is default, three is 0.4
      qf="fieldOne^2.3 fieldTwo fieldThree^0.4"
      #+END_SRC
-**** mm (Minimum Should Match)
+**** mm (Minimum Should Match) p272
+     默认值是 100% 每个条件都必须满足
      - 正数
        必须有多少符合的搜索条件 (在 optional 的条件中查询)
       #+BEGIN_SRC
@@ -180,7 +181,20 @@
 
      - 3<90%
        若是1-3个可选，那么这3个是必须的，否则要总数的90%就可以
+**** pf (phrase fields)
+     没看懂
+**** ps (Phrase Slop)
+     跟上个参数相关，没看懂~
+**** bq (Boost Query)
+     指定一个或者多个短语来增加分数
+**** bf (Boost Functions)
+     #+BEGIN_SRC
+     recip(rord(myfield),1,2,3)^1.5
 
+      bf=recip(rord(creationDate),1,1000,1000)
+      ...or...
+      bq={!func}recip(rord(creationDate),1,1000,1000) // 指定 bq 为函数
+     #+END_SRC
 
 ** Faceting
    对结果进行分类(分组),很方便查询每个条件有多少文档。
